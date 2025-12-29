@@ -1,5 +1,8 @@
 import { useState } from "react";
 
+// Use environment variable for backend URL, fallback to localhost for development
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3001';
+
 interface DecodedToken {
   header: any;
   payload: any;
@@ -29,7 +32,7 @@ const TokenExchange = () => {
       setLoading(true);
       setError("");
       
-      const response = await fetch('http://localhost:3001/api/generate-demo-token', {
+      const response = await fetch(`${BACKEND_URL}/api/generate-demo-token`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -59,7 +62,7 @@ const TokenExchange = () => {
       setLoading(true);
       setError("");
       
-      const response = await fetch('http://localhost:3001/api/exchange-token', {
+      const response = await fetch(`${BACKEND_URL}/api/exchange-token`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
