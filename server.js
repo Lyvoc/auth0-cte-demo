@@ -8,6 +8,7 @@ const PORT = 3001;
 
 app.use(cors());
 app.use(express.json());
+// (SAML assertion capture/forward endpoints removed per revert request)
 
 // Token exchange endpoint
 app.post('/api/exchange-token', async (req, res) => {

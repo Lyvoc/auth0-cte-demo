@@ -1,8 +1,4 @@
-  const handleDAELogin = () => {
-    window.location.href = "https://demo-lyvoc.eu.auth0.com/u/login/identifier?state=hKFo2SBCb1VNcUVPVEwxTGxzemZMaGN6ZUZxVGRSOEZEQS00SqFur3VuaXZlcnNhbC1sb2dpbqN0aWTZIHVlSjg0RkpsNmxOYWpZOVFKdGh6Z0NPNV90eHJrem5fo2NpZNkgbEdveEt1M1dOWGN4c0U3eXl4NTRad2VadkU4NVQ5RnY&ui_locales=en";
-  };
-
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 
 const Sidebar = () => {
@@ -25,6 +21,19 @@ const Sidebar = () => {
         redirect_uri: window.location.origin + "/token"
       }
     });
+  };
+  const handleSamlLogin = () => {
+    loginWithRedirect({
+      authorizationParams: {
+        // Use the SAML connection configured in the dashboard
+        connection: "SAML-Auth0-IDP",
+        redirect_uri: window.location.origin + "/token"
+      }
+    });
+  };
+  const navigate = useNavigate();
+  const handleIdpPortal = () => {
+    navigate("/saml-idp-initiated");
   };
 
   return (
@@ -55,6 +64,16 @@ const Sidebar = () => {
       })}>
         Welcome
       </NavLink>
+      <NavLink to="/actions" style={({ isActive }) => ({
+        color: isActive ? "#63b3ed" : "#e2e8f0",
+        textDecoration: "none",
+        fontWeight: 600,
+        fontSize: 17,
+        marginBottom: 16,
+        display: "block",
+      })}>
+        Actions
+      </NavLink>
       <NavLink to="/token-exchange" style={({ isActive }) => ({
         color: isActive ? "#63b3ed" : "#e2e8f0",
         textDecoration: "none",
@@ -78,13 +97,57 @@ const Sidebar = () => {
         textDecoration: "none",
         fontWeight: 600,
         fontSize: 17,
+        marginBottom: 16,
       })}>
         Token / Profile
       </NavLink>
+      <NavLink to="/log-streams" style={({ isActive }) => ({
+        color: isActive ? "#63b3ed" : "#e2e8f0",
+        textDecoration: "none",
+        fontWeight: 600,
+        fontSize: 17,
+        marginBottom: 16,
+      })}>
+        Log Streams
+      </NavLink>
+      <button
+        onClick={handleSamlLogin}
+        style={{
+          marginTop: 16,
+          background: "#6b46c1",
+          color: "#fff",
+          border: "none",
+          borderRadius: 8,
+          padding: "0.9rem 1.2rem",
+          fontWeight: 600,
+          fontSize: 16,
+          cursor: "pointer",
+          textAlign: "left",
+        }}
+      >
+        SAML SP Initiated
+      </button>
+      <button
+        onClick={handleIdpPortal}
+        style={{
+          marginTop: 16,
+          background: "#2b6cb0",
+          color: "#fff",
+          border: "none",
+          borderRadius: 8,
+          padding: "0.9rem 1.2rem",
+          fontWeight: 600,
+          fontSize: 16,
+          cursor: "pointer",
+          textAlign: "left",
+        }}
+      >
+        SAML IDP Initiated
+      </button>
       <button
         onClick={handlePasswordless}
         style={{
-          marginTop: 32,
+          marginTop: 16,
           background: "#ed8936",
           color: "#fff",
           border: "none",
@@ -99,7 +162,9 @@ const Sidebar = () => {
         Passwordless Login
       </button>
       <button
-        onClick={handleDAELogin}
+        onClick={() => {
+          window.location.href = "https://demo-lyvoc.eu.auth0.com/u/login/identifier?state=hKFo2SBCb1VNcUVPVEwxTGxzemZMaGN6ZUZxVGRSOEZEQS00SqFur3VuaXZlcnNhbC1sb2dpbqN0aWTZIHVlSjg0RkpsNmxOYWpZOVFKdGh6Z0NPNV90eHJrem5fo2NpZNkgbEdveEt1M1dOWGN4c0U3eXl4NTRad2VadkU4NVQ5RnY&ui_locales=en";
+        }}
         style={{
           marginTop: 16,
           background: "#38a169",
@@ -130,12 +195,15 @@ const Sidebar = () => {
           textAlign: "left",
         }}
       >
-        Okta Workforce (lyvoc)
+        Okta Workforce OIDC
       </button>
       <button
         onClick={() => {
           if (window.confirm("Are you sure you want to log out?")) {
-            logout({ logoutParams: { returnTo: window.location.origin } });
+            // Clear IdP-initiated tokens from localStorage
+            localStorage.removeItem('idp_id_token');
+            localStorage.removeItem('idp_access_token');
+            logout({ logoutParams: { returnTo: window.location.origin, federated: true } });
           }
         }}
         style={{

@@ -13,14 +13,14 @@ const technologies = [
 ];
 
 const features = [
-  "Custom Token Exchange (separate page)",
-  "Passwordless Authentication (email link)",
-  "Okta Workforce (OIDC) login integration",
-  "DAE Admin login (delegated admin extension)",
-  "Adaptive MFA (database connection with custom claims)",
-  "Token / Profile page (shows access and ID tokens side by side, including custom claims)",
-  "Sidebar navigation for all features",
-  "Logout button"
+  "Custom Token Exchange: Exchange tokens between Auth0 and external IdPs (see dedicated page)",
+  "Passwordless Authentication: Log in with a magic link sent to your email (Universal Login)",
+  "OIDC Workforce Login: Enterprise login via OIDC Workforce connection (if enabled)",
+  "DAE Admin Login: Delegated Admin Extension demo for admin access flows",
+  "Adaptive MFA: Step-up authentication using Guardian MFA for database users, with custom claims",
+  "Token / Profile Page: View and decode your access and ID tokens side by side, including custom claims and SAML attributes",
+  "Sidebar Navigation: Quickly access all authentication flows and documentation",
+  "Logout: Fully clear Auth0 and IdP sessions, including local tokens, for all login types"
 ];
 
 const Welcome = () => (
@@ -40,8 +40,11 @@ const Welcome = () => (
       <div style={{ textAlign: "left", display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
         <h2 style={{ color: "#ed8936", marginBottom: 12, textAlign: "left" }}>Project Features & Auth0 Capabilities</h2>
         <div style={{ color: "#a0aec0", fontSize: "1.1rem", margin: "1.5rem 0", textAlign: "left" }}>
-          {features.map((feature) => (
-            <div key={feature} style={{ marginBottom: 8 }}>{feature}</div>
+          {features.map((feature, idx) => (
+            <React.Fragment key={feature}>
+              <div style={{ marginBottom: 8 }}>{feature}</div>
+              {idx < features.length - 1 && <div style={{ height: 12 }} />}
+            </React.Fragment>
           ))}
         </div>
       </div>

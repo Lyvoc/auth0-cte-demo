@@ -18,6 +18,7 @@ const decodeJWT = (token: string) => {
   }
 };
 
+
 const TokenPage = () => {
   const { isAuthenticated, isLoading, getAccessTokenSilently, getIdTokenClaims, user } = useAuth0();
   const [accessToken, setAccessToken] = React.useState<string>("");
@@ -25,7 +26,41 @@ const TokenPage = () => {
   const [error, setError] = React.useState<string>("");
   const [copiedAccess, setCopiedAccess] = React.useState(false);
   const [copiedId, setCopiedId] = React.useState(false);
+  const [manualTokens, setManualTokens] = React.useState<{ accessToken?: string; idToken?: string } | null>(null);
 
+  // Helper to parse hash fragment for tokens
+  function parseHashTokens(hash: string) {
+    const params = new URLSearchParams(hash.replace(/^#/, ''));
+    const idToken = params.get('id_token');
+    const accessToken = params.get('access_token');
+    return { idToken, accessToken };
+  }
+
+  // On mount, check for tokens in hash (IdP-initiated SSO)
+  React.useEffect(() => {
+    if (!isAuthenticated && window.location.hash && (window.location.hash.includes('id_token') || window.location.hash.includes('access_token'))) {
+      const { idToken, accessToken } = parseHashTokens(window.location.hash);
+      if (idToken || accessToken) {
+        // Store in localStorage for later use
+        if (idToken) localStorage.setItem('idp_id_token', idToken);
+        if (accessToken) localStorage.setItem('idp_access_token', accessToken);
+        setManualTokens({ idToken, accessToken });
+        // Remove hash from URL for cleanliness
+        window.history.replaceState({}, document.title, window.location.pathname);
+      }
+    } else {
+      // On normal navigation, try to load from localStorage if not authenticated
+      if (!isAuthenticated) {
+        const idToken = localStorage.getItem('idp_id_token') || undefined;
+        const accessToken = localStorage.getItem('idp_access_token') || undefined;
+        if (idToken || accessToken) {
+          setManualTokens({ idToken, accessToken });
+        }
+      }
+    }
+  }, [isAuthenticated]);
+
+  // Normal Auth0 SDK token fetch
   React.useEffect(() => {
     if (isAuthenticated) {
       getAccessTokenSilently()
@@ -43,16 +78,19 @@ const TokenPage = () => {
     }
   }, [isAuthenticated, getAccessTokenSilently, getIdTokenClaims]);
 
-  const decodedAccess = decodeJWT(accessToken);
-  const decodedId = decodeJWT(idTokenValue);
+  // Use SDK tokens if authenticated, else manual tokens if present
+  const effectiveAccessToken = isAuthenticated ? accessToken : manualTokens?.accessToken || "";
+  const effectiveIdToken = isAuthenticated ? idTokenValue : manualTokens?.idToken || "";
+  const decodedAccess = decodeJWT(effectiveAccessToken);
+  const decodedId = decodeJWT(effectiveIdToken);
 
   const handleCopyAccess = () => {
-    navigator.clipboard.writeText(accessToken);
+    navigator.clipboard.writeText(effectiveAccessToken);
     setCopiedAccess(true);
     setTimeout(() => setCopiedAccess(false), 1200);
   };
   const handleCopyId = () => {
-    navigator.clipboard.writeText(idTokenValue);
+    navigator.clipboard.writeText(effectiveIdToken);
     setCopiedId(true);
     setTimeout(() => setCopiedId(false), 1200);
   };
@@ -66,10 +104,13 @@ const TokenPage = () => {
     );
   }
 
-  if (!isAuthenticated && !isLoading) {
+  if (!isAuthenticated && !isLoading && !manualTokens) {
     return (
       <div style={{ textAlign: "center", marginTop: 60 }}>
         <h2 style={{ color: "#f7fafc" }}>You need to log in to view your token</h2>
+        <div style={{ color: "#b2b7c2", margin: "16px 0 24px 0", fontSize: 16 }}>
+          Clicking <b>Log In</b> will trigger the default Auth0 Universal Login experience, where all connections (databases, social, enterprise, passwordless, etc.) enabled for this application in your tenant will be shown.
+        </div>
         <LoginButton />
       </div>
     );
@@ -90,7 +131,7 @@ const TokenPage = () => {
             </button>
           </div>
           <div style={{ background: "#1a1e27", padding: 16, borderRadius: 8, color: "#e2e8f0", fontFamily: "monospace", wordBreak: "break-all", marginBottom: 24, maxHeight: 200, overflow: "auto" }}>
-            {accessToken || "No access token available."}
+            {effectiveAccessToken || "No access token available."}
           </div>
           {decodedAccess && (
             <>
@@ -119,7 +160,7 @@ const TokenPage = () => {
             </button>
           </div>
           <div style={{ background: "#1a1e27", padding: 16, borderRadius: 8, color: "#e2e8f0", fontFamily: "monospace", wordBreak: "break-all", marginBottom: 24, maxHeight: 200, overflow: "auto" }}>
-            {idTokenValue || "No ID token available."}
+            {effectiveIdToken || "No ID token available."}
           </div>
           {decodedId && (
             <>
@@ -140,7 +181,7 @@ const TokenPage = () => {
         </div>
       </div>
       <div style={{ marginTop: 32, color: "#a0aec0", textAlign: "center" }}>
-        <strong>User:</strong> {user?.email || user?.name || "Unknown"}
+        <strong>User:</strong> {user?.email || user?.name || (manualTokens?.idToken ? "(IdP-initiated, not decoded)" : "Unknown")}
       </div>
     </div>
   );

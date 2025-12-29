@@ -6,6 +6,9 @@ import Welcome from "./Welcome";
 import TokenExchange from "./TokenExchange";
 import TokenPage from "./TokenPage";
 import AdaptiveMfaPage from "./AdaptiveMfaPage";
+import LogStreamsPage from "./LogStreamsPage";
+import SAMLIdpInitiatedPage from "./SAMLIdpInitiatedPage";
+import ActionsPage from "./ActionsPage";
 // import OrganizationPage from "./OrganizationPage";
 
 const App = () => {
@@ -31,7 +34,10 @@ const App = () => {
           <Route path="/token-exchange" element={<TokenExchange />} />
           <Route path="/token" element={<TokenPage />} />
           <Route path="/adaptive-mfa" element={<AdaptiveMfaPage />} />
+          <Route path="/log-streams" element={<LogStreamsPage />} />
+          <Route path="/saml-idp-initiated" element={<SAMLIdpInitiatedPage />} />
           {/* <Route path="/organization" element={<OrganizationPage />} /> */}
+          <Route path="/actions" element={<ActionsPage />} />
         </Routes>
       </main>
     </div>

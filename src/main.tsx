@@ -4,7 +4,7 @@ import { Auth0Provider } from "@auth0/auth0-react";
 
 import App from "./App";
 import "./index.css";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, useNavigate } from "react-router-dom";
 
 const domain = import.meta.env.VITE_AUTH0_DOMAIN;
 const clientId = import.meta.env.VITE_AUTH0_CLIENT_ID;
@@ -29,8 +29,10 @@ if (!rootElement) {
   throw new Error("Root element not found");
 }
 
-ReactDOM.createRoot(rootElement).render(
-  <React.StrictMode>
+// Custom wrapper to use navigate in onRedirectCallback
+function Auth0WithRouter() {
+  const navigate = useNavigate();
+  return (
     <Auth0Provider
       domain={domain}
       clientId={clientId}
@@ -39,10 +41,17 @@ ReactDOM.createRoot(rootElement).render(
         audience: audience,
         scope: "openid profile email read:data"
       }}
+      onRedirectCallback={() => navigate("/token")}
     >
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <App />
     </Auth0Provider>
+  );
+}
+
+ReactDOM.createRoot(rootElement).render(
+  <React.StrictMode>
+    <BrowserRouter>
+      <Auth0WithRouter />
+    </BrowserRouter>
   </React.StrictMode>
 );
