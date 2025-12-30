@@ -31,7 +31,6 @@ const TokenExchange = () => {
     try {
       setLoading(true);
       setError("");
-      
       const response = await fetch(`${BACKEND_URL}/api/generate-demo-token`, {
         method: 'POST',
         headers: {
@@ -42,14 +41,18 @@ const TokenExchange = () => {
           name: userName
         })
       });
-      
       if (!response.ok) {
         throw new Error('Failed to generate token');
       }
-      
       const data = await response.json();
-      setExternalToken(data.external_token);
-      setExternalTokenData(data.decoded);
+      setExternalToken(data.token);
+      // Decode the token (base64) and set as externalTokenData
+      try {
+        const decoded = JSON.parse(atob(data.token));
+        setExternalTokenData(decoded);
+      } catch (decodeErr) {
+        setExternalTokenData(null);
+      }
     } catch (err: any) {
       setError(`Error generating token: ${err.message}`);
     } finally {
@@ -68,7 +71,7 @@ const TokenExchange = () => {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          external_token: externalToken
+          subjectToken: externalToken
         })
       });
       
