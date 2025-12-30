@@ -101,6 +101,7 @@ const Sidebar = () => {
       })}>
         Token / Profile
       </NavLink>
+
       <NavLink to="/log-streams" style={({ isActive }) => ({
         color: isActive ? "#63b3ed" : "#e2e8f0",
         textDecoration: "none",
@@ -110,23 +111,17 @@ const Sidebar = () => {
       })}>
         Log Streams
       </NavLink>
-      <button
-        onClick={handleSamlLogin}
-        style={{
-          marginTop: 16,
-          background: "#6b46c1",
-          color: "#fff",
-          border: "none",
-          borderRadius: 8,
-          padding: "0.9rem 1.2rem",
-          fontWeight: 600,
-          fontSize: 16,
-          cursor: "pointer",
-          textAlign: "left",
-        }}
-      >
-        SAML SP Initiated
-      </button>
+
+      <NavLink to="/forms" style={({ isActive }) => ({
+        color: isActive ? "#63b3ed" : "#e2e8f0",
+        textDecoration: "none",
+        fontWeight: 600,
+        fontSize: 17,
+        marginBottom: 16,
+      })}>
+        Forms
+      </NavLink>
+
       <button
         onClick={handleIdpPortal}
         style={{
@@ -161,9 +156,10 @@ const Sidebar = () => {
       >
         Passwordless Login
       </button>
+      {/*
       <button
         onClick={() => {
-          window.location.href = "https://demo-lyvoc.eu.auth0.com/u/login/identifier?state=hKFo2SBCb1VNcUVPVEwxTGxzemZMaGN6ZUZxVGRSOEZEQS00SqFur3VuaXZlcnNhbC1sb2dpbqN0aWTZIHVlSjg0RkpsNmxOYWpZOVFKdGh6Z0NPNV90eHJrem5fo2NpZNkgbEdveEt1M1dOWGN4c0U3eXl4NTRad2VadkU4NVQ5RnY&ui_locales=en";
+          window.location.href = "https://demo-lyvoc.eu.auth0.com/auth0-delegated-admin";
         }}
         style={{
           marginTop: 16,
@@ -180,6 +176,7 @@ const Sidebar = () => {
       >
         DAE Admin Login
       </button>
+      */}
       <button
         onClick={handleOktaWorkforce}
         style={{

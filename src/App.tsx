@@ -9,6 +9,7 @@ import AdaptiveMfaPage from "./AdaptiveMfaPage";
 import LogStreamsPage from "./LogStreamsPage";
 import SAMLIdpInitiatedPage from "./SAMLIdpInitiatedPage";
 import ActionsPage from "./ActionsPage";
+import FormsPage from "./FormsPage";
 // import OrganizationPage from "./OrganizationPage";
 
 const App = () => {
@@ -38,6 +39,7 @@ const App = () => {
           <Route path="/saml-idp-initiated" element={<SAMLIdpInitiatedPage />} />
           {/* <Route path="/organization" element={<OrganizationPage />} /> */}
           <Route path="/actions" element={<ActionsPage />} />
+          <Route path="/forms" element={<FormsPage />} />
         </Routes>
       </main>
     </div>
