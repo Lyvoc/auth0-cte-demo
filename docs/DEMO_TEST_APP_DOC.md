@@ -1,18 +1,15 @@
 
+
 # Auth0 Demo App – Test & Feature Documentation
 
-## 📋 Demo Perimeter
+This document provides an overview of the Auth0 Demo App, including its features, test accounts, environment variables, and supporting documentation.
 
-This document describes the scope, test accounts, and reusable details for the Auth0 Demo App, which includes multiple Auth0 features and flows.
-
-
-### 1. Purpose
+## Purpose
 - Demonstrate and test multiple Auth0 features in a single app
 - Includes: Custom Token Exchange, SSO, Adaptive MFA, Organizations, Log Streams, and more
 - Visualize and decode tokens for learning and troubleshooting
 
-
-### 2. Features Covered
+## Features Covered
 - Custom Token Exchange (CTE)
 - SAML IdP-Initiated SSO
 - Adaptive MFA
