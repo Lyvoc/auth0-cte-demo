@@ -1,16 +1,16 @@
 
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import Sidebar from "./Sidebar";
-import Welcome from "./Welcome";
-import TokenExchange from "./TokenExchange";
-import TokenPage from "./TokenPage";
-import AdaptiveMfaPage from "./AdaptiveMfaPage";
-import LogStreamsPage from "./LogStreamsPage";
-import SAMLIdpInitiatedPage from "./SAMLIdpInitiatedPage";
-import ActionsPage from "./ActionsPage";
-import FormsPage from "./FormsPage";
-import OrganizationPage from "./OrganizationPage";
+import Sidebar from "./components/Sidebar";
+import Welcome from "./pages/Welcome";
+import TokenExchange from "./pages/TokenExchange";
+import TokenPage from "./pages/TokenPage";
+import AdaptiveMfaPage from "./pages/AdaptiveMfaPage";
+import LogStreamsPage from "./pages/LogStreamsPage";
+import SAMLIdpInitiatedPage from "./pages/SAMLIdpInitiatedPage";
+import ActionsPage from "./pages/ActionsPage";
+import FormsPage from "./pages/FormsPage";
+import OrganizationPage from "./pages/OrganizationPage";
 // import OrganizationPage from "./OrganizationPage";
 
 const App = () => {

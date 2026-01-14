@@ -30,7 +30,7 @@ This application demonstrates the complete Custom Token Exchange flow:
 
 ### 1. Configure Auth0
 
-Follow the complete setup in [AUTH0_SETUP_GUIDE.md](./AUTH0_SETUP_GUIDE.md):
+Follow the complete setup in [docs/AUTH0_SETUP_GUIDE.md](./docs/AUTH0_SETUP_GUIDE.md):
 
 1. Get Management API token
 2. Configure your Auth0 application

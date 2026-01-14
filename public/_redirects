@@ -1,0 +1,16 @@
+# Cloudflare Pages SPA (Single Page Application) Routing Configuration
+# This file tells Cloudflare Pages to serve index.html for ALL routes
+# so React Router can handle client-side routing properly.
+#
+# Without this file, routes like /token, /adaptive-mfa, etc. would return 404
+# because Cloudflare looks for physical files/folders that don't exist.
+#
+# HOW TO UPLOAD TO CLOUDFLARE PAGES:
+# 1. Run: npm run build
+# 2. Go to your dist/ folder
+# 3. Select ALL contents (Ctrl+A): assets folder, index.html, and _redirects
+# 4. Drag and drop ALL FILES TOGETHER at once to Cloudflare Pages
+# 5. DO NOT upload files separately - this breaks the structure!
+#
+# The rule below means: "For any route (/*), serve /index.html with 200 status"
+/*    /index.html   200

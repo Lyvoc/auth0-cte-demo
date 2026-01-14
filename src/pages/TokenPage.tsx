@@ -1,6 +1,6 @@
 import React from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import LoginButton from "./LoginButton";
+import LoginButton from "../components/LoginButton";
 
 
 const decodeJWT = (token: string) => {
@@ -57,7 +57,10 @@ const TokenPage = () => {
         // Store in localStorage for later use
         if (idToken) localStorage.setItem('idp_id_token', idToken);
         if (accessToken) localStorage.setItem('idp_access_token', accessToken);
-        setManualTokens({ idToken, accessToken });
+        setManualTokens({ 
+          idToken: idToken || undefined, 
+          accessToken: accessToken || undefined 
+        });
         // Remove hash from URL for cleanliness
         window.history.replaceState({}, document.title, window.location.pathname);
       }

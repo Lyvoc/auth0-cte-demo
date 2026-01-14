@@ -11,6 +11,9 @@ package-lock.json
 dist/
 build/
 
+# Cloudflare Wrangler
+.wrangler/
+
 # Logs
 *.log
 npm-debug.log*
