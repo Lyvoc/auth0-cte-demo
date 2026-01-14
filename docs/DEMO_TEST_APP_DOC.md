@@ -21,15 +21,23 @@ This document describes the scope, test accounts, and reusable details for the A
 - Token generation and decoding
 - User profile and session management
 
-### 3. Test Accounts
+
+### 3. Test Accounts & Credentials
+
+- **SAML IdP-Initiated SSO (Demo/Test User):**
+	- **Email:** `test123@gmail.com`
+	- **Password:** `Password1234`
+	- Use these credentials when testing the SAML IdP-initiated flow (see the SAML IdP-Initiated page in the app or docs for details).
+
+- **Other Flows (Okta, Passwordless, Social, etc.):**
+	- Use your own accounts for Okta, email/password, passwordless, or social login flows. The app does not provide test users for these; you must use your own credentials for each provider.
+
 - **Auth0 Tenant:** _[Insert your Auth0 tenant domain]_  
-- **Test User Email:** _[Insert test user email]_  
-- **Test User Password:** _[Insert test user password]_  
 - **Client ID:** _[Insert Auth0 client ID]_  
 - **Client Secret:** _[Insert Auth0 client secret]_  
 - **API Audience:** _[Insert API audience]_  
 
-> _Update these fields with your actual test credentials. Do not commit real secrets to version control._
+> _Update these fields with your actual Auth0 tenant and application credentials. Do not commit real secrets to version control._
 
 ### 4. Environment Variables
 ```
