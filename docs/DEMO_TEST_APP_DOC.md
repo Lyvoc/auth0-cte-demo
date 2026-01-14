@@ -32,12 +32,7 @@ This document describes the scope, test accounts, and reusable details for the A
 - **Other Flows (Okta, Passwordless, Social, etc.):**
 	- Use your own accounts for Okta, email/password, passwordless, or social login flows. The app does not provide test users for these; you must use your own credentials for each provider. For flows like Adaptive MFA, you will need to enroll the required MFA factor (e.g., authenticator app, SMS, etc.) during your first login if not already enrolled.
 
-- **Auth0 Tenant:** _[Insert your Auth0 tenant domain]_  
-- **Client ID:** _[Insert Auth0 client ID]_  
-- **Client Secret:** _[Insert Auth0 client secret]_  
-- **API Audience:** _[Insert API audience]_  
 
-> _Update these fields with your actual Auth0 tenant and application credentials. Do not commit real secrets to version control._
 
 ### 4. Environment Variables
 ```
