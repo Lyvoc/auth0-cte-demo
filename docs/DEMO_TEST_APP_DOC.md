@@ -2,7 +2,10 @@
 
 # Auth0 Demo App – Test & Feature Documentation
 
-This document provides an overview of the Auth0 Demo App, including its features, test accounts, environment variables, and supporting documentation.
+
+This document provides an overview of the Auth0 Demo App, including its features, test accounts, and supporting documentation. To view and interact with the live demo, visit:
+
+**Live Demo URL:** https://auth0-cte-demo.pages.dev/
 
 ## Purpose
 - Demonstrate and test multiple Auth0 features in a single app
@@ -31,24 +34,11 @@ This document provides an overview of the Auth0 Demo App, including its features
 
 
 
-### 4. Environment Variables
-```
-VITE_AUTH0_DOMAIN=your-domain.auth0.com
-VITE_AUTH0_CLIENT_ID=your-client-id
-VITE_AUTH0_AUDIENCE=https://my-api.example.com
-AUTH0_CLIENT_SECRET=your-client-secret-here
-```
 
 
-### 5. Demo Steps (Example)
-1. Enter user details (email, name)
-2. Generate an external/legacy token (CTE flow)
-3. Exchange the token via backend (CTE flow)
-4. Test SSO, Adaptive MFA, Organizations, etc. via sidebar navigation
-5. View Auth0 tokens and decoded payloads
 
 
-### 6. Documentation Overview
+### Documentation Overview
 
 Below is a summary of each documentation file included in this project and its purpose:
 
