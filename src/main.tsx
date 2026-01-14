@@ -41,7 +41,10 @@ function Auth0WithRouter() {
         audience: audience,
         scope: "openid profile email read:data"
       }}
-      onRedirectCallback={() => navigate("/token")}
+      onRedirectCallback={(appState) => {
+        // Navigate to the intended page or /token if none specified
+        navigate(appState?.returnTo || "/token");
+      }}
     >
       <App />
     </Auth0Provider>

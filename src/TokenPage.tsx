@@ -20,13 +20,26 @@ const decodeJWT = (token: string) => {
 
 
 const TokenPage = () => {
-  const { isAuthenticated, isLoading, getAccessTokenSilently, getIdTokenClaims, user } = useAuth0();
+  const { isAuthenticated, isLoading, getAccessTokenSilently, getIdTokenClaims, user, error: authError } = useAuth0();
   const [accessToken, setAccessToken] = React.useState<string>("");
   const [idTokenValue, setIdTokenValue] = React.useState<string>("");
   const [error, setError] = React.useState<string>("");
   const [copiedAccess, setCopiedAccess] = React.useState(false);
   const [copiedId, setCopiedId] = React.useState(false);
   const [manualTokens, setManualTokens] = React.useState<{ accessToken?: string; idToken?: string } | null>(null);
+  const [authTimeout, setAuthTimeout] = React.useState(false);
+
+  // Add timeout for authentication processing
+  React.useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    if ((urlParams.get('code') || urlParams.get('state')) && !isAuthenticated) {
+      const timer = setTimeout(() => {
+        setAuthTimeout(true);
+      }, 10000); // 10 second timeout
+      
+      return () => clearTimeout(timer);
+    }
+  }, [isAuthenticated]);
 
   // Helper to parse hash fragment for tokens
   function parseHashTokens(hash: string) {
@@ -104,7 +117,31 @@ const TokenPage = () => {
     );
   }
 
-  if (!isAuthenticated && !isLoading && !manualTokens) {
+  // Show auth error if exists
+  if (authError) {
+    return (
+      <div style={{ textAlign: "center", marginTop: 60 }}>
+        <h2 style={{ color: "#fc8181" }}>Authentication Error</h2>
+        <div style={{ color: "#b2b7c2", margin: "16px 0 24px 0", fontSize: 16 }}>
+          {authError.message}
+        </div>
+        <LoginButton />
+      </div>
+    );
+  }
+
+  // Add extra time for Auth0 state to settle after callback
+  if (!isAuthenticated && !manualTokens) {
+    // If we just got redirected (has code or state params), show loading a bit longer
+    const urlParams = new URLSearchParams(window.location.search);
+    if ((urlParams.get('code') || urlParams.get('state')) && !authTimeout) {
+      return (
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "60vh" }}>
+          <div className="loading-text" style={{ color: "#63b3ed", fontSize: 24 }}>Processing authentication...</div>
+        </div>
+      );
+    }
+    
     return (
       <div style={{ textAlign: "center", marginTop: 60 }}>
         <h2 style={{ color: "#f7fafc" }}>You need to log in to view your token</h2>

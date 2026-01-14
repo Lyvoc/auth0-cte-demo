@@ -18,7 +18,8 @@ const Sidebar = () => {
     loginWithRedirect({
       authorizationParams: {
         connection: "lyvoc", // Okta Workforce connection name
-        redirect_uri: window.location.origin + "/token"
+        redirect_uri: window.location.origin + "/token",
+        prompt: "login" // Force credential prompt even if SSO session exists
       }
     });
   };
@@ -227,10 +228,32 @@ const Sidebar = () => {
       <button
         onClick={() => {
           if (window.confirm("Are you sure you want to log out?")) {
-            // Clear IdP-initiated tokens from localStorage
-            localStorage.removeItem('idp_id_token');
-            localStorage.removeItem('idp_access_token');
-            logout({ logoutParams: { returnTo: window.location.origin, federated: true } });
+            // Enhanced universal logout - clear all browser storage
+            localStorage.clear();
+            sessionStorage.clear();
+            
+            // Clear Auth0 cache if available
+            if ('caches' in window) {
+              caches.keys().then(names => {
+                names.forEach(name => {
+                  if (name.includes('auth0') || name.includes('token')) {
+                    caches.delete(name);
+                  }
+                });
+              });
+            }
+            
+            // Small delay to ensure cleanup completes before logout
+            setTimeout(() => {
+              logout({ 
+                logoutParams: { 
+                  returnTo: window.location.origin, 
+                  federated: true,
+                  // Force logout from IdP regardless of session state
+                  prompt: 'none'
+                } 
+              });
+            }, 100);
           }
         }}
         style={{
