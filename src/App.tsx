@@ -2,6 +2,7 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Sidebar from "./components/Sidebar";
+import DaeExtensionPage from "./pages/DaeExtensionPage";
 import Welcome from "./pages/Welcome";
 import TokenExchange from "./pages/TokenExchange";
 import TokenPage from "./pages/TokenPage";
@@ -42,6 +43,7 @@ const App = () => {
           <Route path="/actions" element={<ActionsPage />} />
           <Route path="/forms" element={<FormsPage />} />
           <Route path="/organization" element={<OrganizationPage />} />
+          <Route path="/dae-extension" element={<DaeExtensionPage />} />
         </Routes>
       </main>
     </div>

@@ -124,6 +124,7 @@ const Sidebar = () => {
         Forms
       </NavLink>
 
+
       <NavLink to="/organization" style={({ isActive }) => ({
         color: isActive ? "#63b3ed" : "#e2e8f0",
         textDecoration: "none",
@@ -132,6 +133,27 @@ const Sidebar = () => {
         marginBottom: 16,
       })}>
         Organization
+      </NavLink>
+
+      <NavLink
+        to="/dae-extension"
+        style={({ isActive }) => ({
+          color: isActive ? "#63b3ed" : "#e2e8f0",
+          background: isActive ? "#23263a" : "#2b6cb0",
+          border: isActive ? "2px solid #63b3ed" : "none",
+          borderRadius: 8,
+          padding: "0.9rem 1.2rem",
+          fontWeight: 600,
+          fontSize: 16,
+          marginTop: 16,
+          marginBottom: 8,
+          display: "block",
+          textDecoration: "none",
+          textAlign: "left",
+          transition: "background 0.2s, color 0.2s",
+        })}
+      >
+        DAE Extension
       </NavLink>
 
       <button
