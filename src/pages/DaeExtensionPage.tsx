@@ -13,8 +13,18 @@ const DaeExtensionPage: React.FC = () => (
     </p>
     <h2>Test Credentials</h2>
     <ul>
-      <li>Email: <strong>daetest@gmail.com</strong></li>
-      <li>Password: <strong>Password1234</strong></li>
+      <li>
+        <strong>Admin User</strong><br />
+        Email: <strong>daetest@gmail.com</strong><br />
+        Password: <strong>Password1234</strong><br />
+        <em>This user has full delegated admin permissions in the DAE app.</em>
+      </li>
+      <li style={{ marginTop: '1rem' }}>
+        <strong>Auditor User</strong><br />
+        Email: <strong>daeauditor@gmail.com</strong><br />
+        Password: <strong>Password1234</strong><br />
+        <em>This user has the <strong>auditor</strong> role, which provides fewer permissions than the admin user. The auditor can view user information but cannot perform management actions. This demonstrates how DAE can be used to assign different levels of access to different users, supporting the principle of least privilege.</em>
+      </li>
     </ul>
     <h2>DAE App Link</h2>
     <p>

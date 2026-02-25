@@ -12,11 +12,12 @@ import SAMLIdpInitiatedPage from "./pages/SAMLIdpInitiatedPage";
 import ActionsPage from "./pages/ActionsPage";
 import FormsPage from "./pages/FormsPage";
 import OrganizationPage from "./pages/OrganizationPage";
+import SettingsPage from "./pages/SettingsPage";
 // import OrganizationPage from "./OrganizationPage";
 
 const App = () => {
   return (
-    <div style={{ display: "flex", minHeight: "100vh" }}>
+    <div style={{ display: "flex", minHeight: "100vh", background: "var(--bg-primary)" }}>
       <Sidebar />
       <main
         style={{
@@ -30,6 +31,7 @@ const App = () => {
           width:  "900px",
           marginLeft: 220,
           padding: "2rem 1rem",
+          background: "var(--bg-primary)",
         }}
       >
         <Routes>
@@ -43,6 +45,7 @@ const App = () => {
           <Route path="/actions" element={<ActionsPage />} />
           <Route path="/forms" element={<FormsPage />} />
           <Route path="/organization" element={<OrganizationPage />} />
+          <Route path="/settings" element={<SettingsPage />} />
           <Route path="/dae-extension" element={<DaeExtensionPage />} />
         </Routes>
       </main>

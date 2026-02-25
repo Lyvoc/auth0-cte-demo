@@ -1,8 +1,10 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useTheme } from "../context/ThemeContext";
 
 const Sidebar = () => {
   const { loginWithRedirect, logout } = useAuth0();
+  const { theme } = useTheme();
 
 
   const handlePasswordless = () => {
@@ -41,8 +43,8 @@ const Sidebar = () => {
     <nav
       style={{
         width: 220,
-        background: "#23263a",
-        minHeight: "100vh",
+        background: "var(--bg-sidebar)",
+        height: "100vh",
         padding: "2rem 1rem",
         display: "flex",
         flexDirection: "column",
@@ -51,13 +53,25 @@ const Sidebar = () => {
         left: 0,
         top: 0,
         zIndex: 10,
+        overflowY: "auto",
+        overflowX: "hidden",
+        boxSizing: "border-box",
       }}
     >
       <div style={{ marginBottom: "2rem", textAlign: "center" }}>
-        <div style={{ color: "#f7fafc", fontWeight: 700, fontSize: 18 }}>Auth0 CIC Demo</div>
+        {theme.logoUrl && (
+          <img
+            src={theme.logoUrl}
+            alt="Logo"
+            style={{ maxWidth: 140, maxHeight: 60, marginBottom: 12, objectFit: "contain" }}
+          />
+        )}
+        <div style={{ color: "var(--text-primary)", fontWeight: 700, fontSize: 18 }}>
+          Auth0 {theme.customerName ? `${theme.customerName} ` : ""}CIC Demo
+        </div>
       </div>
       <NavLink to="/" end style={({ isActive }) => ({
-        color: isActive ? "#63b3ed" : "#e2e8f0",
+        color: isActive ? "var(--primary-color)" : "var(--text-secondary)",
         textDecoration: "none",
         fontWeight: 600,
         fontSize: 17,
@@ -66,7 +80,7 @@ const Sidebar = () => {
         Welcome
       </NavLink>
       <NavLink to="/actions" style={({ isActive }) => ({
-        color: isActive ? "#63b3ed" : "#e2e8f0",
+        color: isActive ? "var(--primary-color)" : "var(--text-secondary)",
         textDecoration: "none",
         fontWeight: 600,
         fontSize: 17,
@@ -76,7 +90,7 @@ const Sidebar = () => {
         Actions
       </NavLink>
       <NavLink to="/token-exchange" style={({ isActive }) => ({
-        color: isActive ? "#63b3ed" : "#e2e8f0",
+        color: isActive ? "var(--primary-color)" : "var(--text-secondary)",
         textDecoration: "none",
         fontWeight: 600,
         fontSize: 17,
@@ -85,7 +99,7 @@ const Sidebar = () => {
         Custom Token Exchange
       </NavLink>
       <NavLink to="/adaptive-mfa" style={({ isActive }) => ({
-        color: isActive ? "#63b3ed" : "#e2e8f0",
+        color: isActive ? "var(--primary-color)" : "var(--text-secondary)",
         textDecoration: "none",
         fontWeight: 600,
         fontSize: 17,
@@ -94,7 +108,7 @@ const Sidebar = () => {
         Adaptive MFA
       </NavLink>
       <NavLink to="/token" style={({ isActive }) => ({
-        color: isActive ? "#63b3ed" : "#e2e8f0",
+        color: isActive ? "var(--primary-color)" : "var(--text-secondary)",
         textDecoration: "none",
         fontWeight: 600,
         fontSize: 17,
@@ -104,7 +118,7 @@ const Sidebar = () => {
       </NavLink>
 
       <NavLink to="/log-streams" style={({ isActive }) => ({
-        color: isActive ? "#63b3ed" : "#e2e8f0",
+        color: isActive ? "var(--primary-color)" : "var(--text-secondary)",
         textDecoration: "none",
         fontWeight: 600,
         fontSize: 17,
@@ -115,7 +129,7 @@ const Sidebar = () => {
 
 
       <NavLink to="/forms" style={({ isActive }) => ({
-        color: isActive ? "#63b3ed" : "#e2e8f0",
+        color: isActive ? "var(--primary-color)" : "var(--text-secondary)",
         textDecoration: "none",
         fontWeight: 600,
         fontSize: 17,
@@ -126,7 +140,7 @@ const Sidebar = () => {
 
 
       <NavLink to="/organization" style={({ isActive }) => ({
-        color: isActive ? "#63b3ed" : "#e2e8f0",
+        color: isActive ? "var(--primary-color)" : "var(--text-secondary)",
         textDecoration: "none",
         fontWeight: 600,
         fontSize: 17,
@@ -293,7 +307,20 @@ const Sidebar = () => {
       >
         Log Out
       </button>
-    </nav>
+      {/* Spacer to push settings to bottom */}
+      <div style={{ flex: 1 }} />
+
+      <NavLink to="/settings" style={({ isActive }) => ({
+        color: isActive ? "var(--primary-color)" : "var(--text-secondary)",
+        textDecoration: "none",
+        fontWeight: 600,
+        fontSize: 15,
+        paddingTop: 16,
+        borderTop: "1px solid var(--text-muted)",
+        marginTop: 16,
+      })}>
+        ⚙ Settings
+      </NavLink>    </nav>
   );
 };
 

@@ -5,6 +5,7 @@ import { Auth0Provider } from "@auth0/auth0-react";
 import App from "./App";
 import "./index.css";
 import { BrowserRouter, useNavigate } from "react-router-dom";
+import { ThemeProvider } from "./context/ThemeContext";
 
 const domain = import.meta.env.VITE_AUTH0_DOMAIN;
 const clientId = import.meta.env.VITE_AUTH0_CLIENT_ID;
@@ -53,8 +54,10 @@ function Auth0WithRouter() {
 
 ReactDOM.createRoot(rootElement).render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Auth0WithRouter />
-    </BrowserRouter>
+    <ThemeProvider>
+      <BrowserRouter>
+        <Auth0WithRouter />
+      </BrowserRouter>
+    </ThemeProvider>
   </React.StrictMode>
 );

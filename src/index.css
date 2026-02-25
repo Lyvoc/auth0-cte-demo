@@ -1,5 +1,43 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
+:root {
+    --primary-color: #63b3ed;
+    --secondary-color: #ed8936;
+    --bg-primary: #1a1e27;
+    --bg-secondary: #3b5ead;
+    --bg-sidebar: #23263a;
+    --text-primary: #f7fafc;
+    --text-secondary: #e2e8f0;
+    --text-muted: #a0aec0;
+}
+
+/* Custom Scrollbar Styles */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--text-muted);
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-color);
+}
+
+/* Firefox scrollbar */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--text-muted) var(--bg-primary);
+}
+
 html, body {
     margin: 0;
     padding: 0;
@@ -8,8 +46,8 @@ html, body {
 
 body {
     font-family: 'Inter', sans-serif;
-    background-color: #1a1e27;
-    color: #e2e8f0;
+    background-color: var(--bg-primary);
+    color: var(--text-secondary);
     overflow-y: auto;
     overflow-x: hidden;
 }
@@ -34,7 +72,7 @@ body {
 }
 
 .loading-state, .error-state {
-    background-color: #2d313c;
+    background-color: var(--bg-secondary);
     border-radius: 15px;
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
     padding: 3rem;
@@ -44,7 +82,7 @@ body {
 .loading-text {
     font-size: 1.8rem;
     font-weight: 500;
-    color: #a0aec0;
+    color: var(--text-muted);
     animation: pulse 1.5s infinite ease-in-out;
 }
 
@@ -70,7 +108,7 @@ body {
 }
 
 .main-card-wrapper {
-    background-color: #262a33;
+    background-color: var(--bg-secondary);
     border-radius: 20px;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.05);
     display: flex;
