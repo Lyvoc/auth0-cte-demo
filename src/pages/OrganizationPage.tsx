@@ -9,7 +9,7 @@ const OrganizationPage: React.FC = () => {
   const handleOrgLogin = () => {
     loginWithRedirect({
       authorizationParams: {
-        organization: "org_NuioIiSZARzIcDR9",
+        organization: "org_uLeRVSP3bEako1sl",
         redirect_uri: window.location.origin + "/token",
         scope: "openid profile email"
       }
@@ -49,7 +49,7 @@ const OrganizationPage: React.FC = () => {
         textAlign: "left",
       }}
     >
-      Login with Organization (org_NuioIiSZARzIcDR9)
+      Login with Organization (org_uLeRVSP3bEako1sl)
     </button>
   </div>
   );
