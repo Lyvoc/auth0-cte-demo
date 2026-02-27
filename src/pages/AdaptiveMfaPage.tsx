@@ -5,7 +5,7 @@ const AdaptiveMfaPage: React.FC = () => {
   const { loginWithRedirect } = useAuth0();
   
   return (
-    <div style={{ padding: 24 }}>
+    <div style={{ padding: 24, maxWidth: 900, margin: "0 auto" }}>
       <h2>Adaptive MFA</h2>
       <p>
         <b>Adaptive Multi-Factor Authentication (MFA)</b> is a security feature that evaluates risk factors such as user location, device, and behavior to determine when to prompt for additional authentication. This helps balance security and user experience by only requiring MFA when necessary.

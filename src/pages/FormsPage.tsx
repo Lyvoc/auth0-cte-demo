@@ -21,7 +21,7 @@ const FormsPage: React.FC = () => {
   const { loginWithRedirect } = useAuth0();
   
   return (
-    <div style={{ padding: 24 }}>
+    <div style={{ padding: 24, maxWidth: 900, margin: "0 auto" }}>
       <h2>Auth0 Forms & Custom Actions</h2>
       <p>
         <b>Forms</b> in Auth0 Actions allow you to collect additional information or require user consent during the authentication flow. You can prompt users with custom forms based on conditions, such as connection or user metadata.
