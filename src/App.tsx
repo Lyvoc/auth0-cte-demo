@@ -1,6 +1,7 @@
 
-import React from "react";
+import { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
 import Sidebar from "./components/Sidebar";
 import DaeExtensionPage from "./pages/DaeExtensionPage";
 import Welcome from "./pages/Welcome";
@@ -16,6 +17,25 @@ import SettingsPage from "./pages/SettingsPage";
 // import OrganizationPage from "./OrganizationPage";
 
 const App = () => {
+  const { loginWithRedirect } = useAuth0();
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const invitation = params.get("invitation");
+    const organization = params.get("organization");
+    const organizationName = params.get("organization_name");
+
+    if (invitation && organization) {
+      loginWithRedirect({
+        authorizationParams: {
+          invitation,
+          organization,
+          ...(organizationName ? { organization_name: organizationName } : {}),
+        },
+      });
+    }
+  }, [loginWithRedirect]);
+
   return (
     <div style={{ display: "flex", minHeight: "100vh", background: "var(--bg-primary)" }}>
       <Sidebar />

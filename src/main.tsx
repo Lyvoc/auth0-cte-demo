@@ -20,9 +20,9 @@ if (!domain || !clientId) {
   throw new Error("Auth0 domain and client ID must be set in .env file");
 }
 
-// Validate domain format
+// Validate domain format (custom domains like demo-auth0.lyvoc.com are also valid)
 if (!domain.includes('.auth0.com') && !domain.includes('.us.auth0.com') && !domain.includes('.eu.auth0.com') && !domain.includes('.au.auth0.com')) {
-  console.warn("Auth0 domain format might be incorrect. Expected format: your-domain.auth0.com");
+  console.info("Using custom Auth0 domain:", domain);
 }
 
 const rootElement = document.getElementById("root");
