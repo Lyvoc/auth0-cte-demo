@@ -129,7 +129,11 @@ const OrganizationPage: React.FC = () => {
                       target.style.display = "none";
                     }}
                   />
-                  <div style={{ fontWeight: 600, color: "var(--text-primary)" }}>{brand.name}</div>
+                  <div style={{ fontWeight: 600, color: "var(--text-primary)" }}>
+                    {brand.name}
+                    {brand.id === "client-2" && " + IdP okta-saml-test"}
+                    {brand.id === "client-3" && " + IdP auth0 test"}
+                  </div>
                 </div>
               ))}
             </div>
