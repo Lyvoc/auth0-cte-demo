@@ -1,5 +1,7 @@
 import React from 'react';
 
+const SHOW_USE_CASES = false; // Use Cases section + cards
+
 const sectionStyle: React.CSSProperties = {
   background: '#2d313c',
   borderRadius: '10px',
@@ -63,6 +65,8 @@ const DaeExtensionPage: React.FC = () => (
       </a>
     </div>
 
+    {SHOW_USE_CASES && (
+    <>
     <h2>Use Cases</h2>
 
     {/* Create User */}
@@ -119,6 +123,8 @@ const DaeExtensionPage: React.FC = () => (
     </div>
 
     <hr style={dividerStyle} />
+    </>
+    )}
 
     {/* How Hooks Work */}
     <h2 style={{ marginTop: '1.5rem' }}>How It Works — DAE Hooks</h2>
@@ -170,27 +176,12 @@ const DaeExtensionPage: React.FC = () => (
     <h2 style={{ marginTop: '1.5rem' }}>Test Accounts</h2>
 
     <div style={sectionStyle}>
-      <h3 style={{ marginTop: 0 }}>Client 1 Admin</h3>
+      <h3 style={{ marginTop: 0 }}>Admin</h3>
       <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
-        Full DAE access — can create and manage users across all Client 1 organizations.
+        Full DAE access — can create and manage users across all organizations.
       </p>
       <div style={credentialStyle}>
-        <span style={{ color: '#a78bfa' }}>Username:</span> admin@fluidra.com<br />
-        <span style={{ color: '#a78bfa' }}>Password:</span> Password123!<br />
-        <span style={{ color: '#a78bfa' }}>Org:</span> client-1 · Role: admin
-      </div>
-    </div>
-
-    <div style={sectionStyle}>
-      <h3 style={{ marginTop: 0 }}>Client 2 Admin</h3>
-      <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
-        Scoped DAE admin — can only see and manage users within <code>client-2</code>.
-        Use this to contrast with the Client 1 admin and show how the filter hook scopes access per organization.
-      </p>
-      <div style={credentialStyle}>
-        <span style={{ color: '#a78bfa' }}>Username:</span> admin@grepool.com<br />
-        <span style={{ color: '#a78bfa' }}>Password:</span> Password123!<br />
-        <span style={{ color: '#a78bfa' }}>Org:</span> client-2 · Role: Delegated Admin - Administrator
+        <span style={{ color: '#a78bfa' }}>Email:</span> demo-login-pwd@lyvoc.com
       </div>
     </div>
   </div>

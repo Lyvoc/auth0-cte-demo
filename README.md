@@ -55,7 +55,20 @@ npm install
 npm run dev:all
 ```
 
-Open http://localhost:5173
+`npm run dev:all` starts three processes in one terminal:
+
+| Name | What | URL |
+|------|------|-----|
+| `spa` | React SPA (Vite) | http://localhost:8080 |
+| `api` | Token exchange backend (`server.js`) | http://localhost:3001 |
+| `webapp` | Regular Web App (`auth0-express-webapp-sample/`) | http://localhost:3000 |
+
+`npm install` also installs the webapp's dependencies (`postinstall`).
+
+### SSO between the SPA and the web app
+
+Both apps use the same Auth0 tenant, so logging in on one gives a silent login on the other.
+The web app has its own config in `auth0-express-webapp-sample/.env` (`ISSUER_BASE_URL`, `CLIENT_ID`, `SECRET`, `BASE_URL`, `PORT`). In Auth0, its Regular Web Application needs `http://localhost:3000/callback` as Allowed Callback URL and `http://localhost:3000` as Allowed Logout URL.
 
 ## 📁 Project Structure
 

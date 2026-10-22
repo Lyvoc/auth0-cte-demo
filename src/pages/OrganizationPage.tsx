@@ -156,6 +156,16 @@ const OrganizationPage: React.FC = () => {
                     <div style={{ fontSize: "0.85rem", color: "var(--text-muted)" }}>
                       Primary: {selectedBranding.theme.primaryColor}
                     </div>
+                    {selectedBranding.brandId === "client-2" && (
+                      <div style={{ fontSize: "0.85rem", color: "var(--text-muted)", marginTop: "0.25rem" }}>
+                        Okta account: <code>leo.airaudi+okta@lyvoc-okta.com</code>
+                      </div>
+                    )}
+                    {selectedBranding.brandId === "client-3" && (
+                      <div style={{ fontSize: "0.85rem", color: "var(--text-muted)", marginTop: "0.25rem" }}>
+                        Auth0 test tenant account: <code>demo-user-other-auth0@exemple.com</code>
+                      </div>
+                    )}
                   </div>
                   <button
                     style={{

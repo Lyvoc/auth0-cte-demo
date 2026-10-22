@@ -1,9 +1,24 @@
 import React from "react";
 import { useAuth0 } from "@auth0/auth0-react";
+import { clearBrowserSession } from "../utils/clearSession";
+import { PENDING_ADAPTIVE_MFA_LOGIN } from "../config/adaptiveMfa";
 
 const AdaptiveMfaPage: React.FC = () => {
-  const { loginWithRedirect } = useAuth0();
-  
+  const { logout } = useAuth0();
+
+  // Log out first (clears the Auth0/IdP session), then App.tsx resumes the
+  // login with the Users connection once Auth0 redirects back.
+  const handleLogoutThenLogin = () => {
+    clearBrowserSession();
+    sessionStorage.setItem(PENDING_ADAPTIVE_MFA_LOGIN, "1");
+    logout({
+      logoutParams: {
+        returnTo: window.location.origin,
+        federated: true,
+      },
+    });
+  };
+
   return (
     <div style={{ padding: 24, maxWidth: 900, margin: "0 auto" }}>
       <h2>Adaptive MFA</h2>
@@ -15,16 +30,7 @@ const AdaptiveMfaPage: React.FC = () => {
       </p>
 
       <button
-        onClick={() => {
-          loginWithRedirect({
-            authorizationParams: {
-              connection: "Users",
-              redirect_uri: window.location.origin + "/token",
-              scope: "openid profile email",
-              prompt: "login"
-            }
-          });
-          }}
+        onClick={handleLogoutThenLogin}
         style={{
           marginTop: 32,
           background: "#3182ce",

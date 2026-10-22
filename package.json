@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "vite",
     "dev:backend": "node server.js",
-    "dev:all": "concurrently \"npm run dev\" \"npm run dev:backend\"",
+    "dev:webapp": "npm --prefix auth0-express-webapp-sample start",
+    "dev:all": "concurrently -n spa,api,webapp -c cyan,green,magenta \"npm run dev\" \"npm run dev:backend\" \"npm run dev:webapp\"",
+    "postinstall": "npm --prefix auth0-express-webapp-sample install",
     "build": "vite build",
     "serve": "vite preview"
   },

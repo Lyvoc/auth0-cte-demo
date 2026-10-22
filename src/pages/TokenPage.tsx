@@ -1,6 +1,7 @@
 import React from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import LoginButton from "../components/LoginButton";
+import LogoutButton from "../components/LogoutButton";
 
 
 const decodeJWT = (token: string) => {
@@ -159,6 +160,9 @@ const TokenPage = () => {
   return (
     <div style={{ maxWidth: 1600, width: "100%", margin: "2rem auto", background: "#2d313c", borderRadius: 15, padding: "2rem", display: "flex", flexDirection: "column", alignItems: "center" }}>
       <h2 style={{ color: "#63b3ed", marginBottom: 24, textAlign: "center" }}>Your Auth0 Tokens</h2>
+      <div style={{ marginBottom: 24 }}>
+        <LogoutButton />
+      </div>
       {error && <div style={{ color: "#fc8181", marginBottom: 16 }}>{error}</div>}
       <div style={{ display: "flex", gap: 32, justifyContent: "center", width: "100%" }}>
         {/* Access Token Column */}

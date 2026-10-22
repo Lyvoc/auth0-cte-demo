@@ -2,6 +2,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useTheme } from "../context/ThemeContext";
 import { OrganizationBadge } from "./OrganizationPicker";
+import { performFullLogout } from "../utils/clearSession";
 
 const Sidebar = () => {
   const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
@@ -282,36 +283,7 @@ const Sidebar = () => {
         Universal Login
       </button>
       <button
-        onClick={() => {
-          if (window.confirm("Are you sure you want to log out?")) {
-            // Enhanced universal logout - clear all browser storage
-            localStorage.clear();
-            sessionStorage.clear();
-            
-            // Clear Auth0 cache if available
-            if ('caches' in window) {
-              caches.keys().then(names => {
-                names.forEach(name => {
-                  if (name.includes('auth0') || name.includes('token')) {
-                    caches.delete(name);
-                  }
-                });
-              });
-            }
-            
-            // Small delay to ensure cleanup completes before logout
-            setTimeout(() => {
-              logout({ 
-                logoutParams: { 
-                  returnTo: window.location.origin, 
-                  federated: true,
-                  // Force logout from IdP regardless of session state
-                  prompt: 'none'
-                } 
-              });
-            }, 100);
-          }
-        }}
+        onClick={() => performFullLogout(logout)}
         style={{
           marginTop: 16,
           background: "#c53030",

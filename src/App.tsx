@@ -17,13 +17,14 @@ import SettingsPage from "./pages/SettingsPage";
 import { OrganizationProvider } from "./context/OrganizationContext";
 import { useTheme } from "./context/ThemeContext";
 import { getOrgId } from "./config/organizationBranding";
+import { PENDING_ADAPTIVE_MFA_LOGIN } from "./config/adaptiveMfa";
 // import OrganizationPage from "./OrganizationPage";
 
 /**
  * Inner App component that has access to theme context
  */
 const AppContent = () => {
-  const { loginWithRedirect, isAuthenticated, getIdTokenClaims } = useAuth0();
+  const { loginWithRedirect, isAuthenticated, isLoading, getIdTokenClaims } = useAuth0();
   const { applyOrganizationTheme } = useTheme();
 
   // Handle organization invitations and URL-based org routing
@@ -65,6 +66,21 @@ const AppContent = () => {
       applyOrganizationTheme(orgParam);
     }
   }, [loginWithRedirect, isAuthenticated, applyOrganizationTheme]);
+
+  // Resume the Adaptive MFA login after the logout started from AdaptiveMfaPage
+  useEffect(() => {
+    if (isLoading) return;
+    if (!sessionStorage.getItem(PENDING_ADAPTIVE_MFA_LOGIN)) return;
+    sessionStorage.removeItem(PENDING_ADAPTIVE_MFA_LOGIN);
+    loginWithRedirect({
+      authorizationParams: {
+        connection: "Users",
+        redirect_uri: window.location.origin + "/token",
+        scope: "openid profile email",
+        prompt: "login",
+      },
+    });
+  }, [isLoading, loginWithRedirect]);
 
   // Extract org from token and apply theme after authentication
   useEffect(() => {
