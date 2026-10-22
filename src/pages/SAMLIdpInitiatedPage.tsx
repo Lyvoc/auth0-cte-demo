@@ -23,7 +23,7 @@ const SAMLIdpInitiatedPage: React.FC = () => (
         </div>
       </div>
       <button
-        onClick={() => window.open("https://darius-test-lyvoc.eu.auth0.com/samlp/oSvYuQlm5XjUS9morF4Z0lNWBBETMRKV", "_blank", "noopener,noreferrer")}
+        onClick={() => window.open("https://demo-gray-egret-48210.okta.com/app/demo-gray-egret-48210_lyvoctestintegration_1/exk18xick0ipvH1SI698/sso/saml", "_blank", "noopener,noreferrer")}
         style={{
           background: "#2b6cb0",
           color: "#fff",

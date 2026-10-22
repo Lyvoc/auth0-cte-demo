@@ -25,7 +25,12 @@ const dividerStyle: React.CSSProperties = {
   margin: "1rem 0",
 };
 
-const tabStyle = (active: boolean, color: string): React.CSSProperties => ({
+// Hidden for the PlayPlay demo — flip to true to restore
+const SHOW_ROLE_ACCESS = false; // Step 2 + Step 3
+const SHOW_MULTI_ORG = false; // Multi-Organization Users
+const SHOW_EXTRA_TABS = false; // Architecture + Test Accounts tabs
+
+const tabStyle =(active: boolean, color: string): React.CSSProperties => ({
   padding: "0.6rem 1.2rem",
   background: active ? color + "20" : "transparent",
   border: `1px solid ${active ? color : "transparent"}`,
@@ -75,6 +80,7 @@ const OrganizationPage: React.FC = () => {
       </p>
 
       {/* Tabs */}
+      {SHOW_EXTRA_TABS && (
       <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1.5rem" }}>
         <button style={tabStyle(activeTab === "demo", primaryColor)} onClick={() => setActiveTab("demo")}>
           🎨 Live Demo
@@ -86,6 +92,7 @@ const OrganizationPage: React.FC = () => {
           👤 Test Accounts
         </button>
       </div>
+      )}
 
       {/* DEMO TAB */}
       {activeTab === "demo" && (
@@ -167,6 +174,8 @@ const OrganizationPage: React.FC = () => {
           </div>
 
           {/* Role-Based Access Demo */}
+          {SHOW_ROLE_ACCESS && (
+          <>
           <div style={sectionStyle}>
             <h2 style={{ marginTop: 0 }}>Step 2: Role-Based Application Access</h2>
             <p style={{ color: "var(--text-muted)", marginBottom: "1rem" }}>
@@ -294,8 +303,11 @@ const OrganizationPage: React.FC = () => {
               </div>
             )}
           </div>
+          </>
+          )}
 
           {/* Multi-Org User Demo */}
+          {SHOW_MULTI_ORG && (
           <div style={sectionStyle}>
             <h2 style={{ marginTop: 0 }}>Multi-Organization Users</h2>
             <p style={{ color: "var(--text-muted)", marginBottom: "1rem" }}>
@@ -347,6 +359,7 @@ const OrganizationPage: React.FC = () => {
               Use <code>multi@demo.com</code> / <code>Password123!</code> with the org picker — this user belongs to multiple organizations and will see them as selectable options after entering credentials.
             </p>
           </div>
+          )}
         </>
       )}
 

@@ -94,6 +94,35 @@ const Sidebar = () => {
       })}>
         Welcome
       </NavLink>
+      <NavLink to="/token" style={({ isActive }) => ({
+        color: isActive ? "var(--primary-color)" : "var(--text-secondary)",
+        textDecoration: "none",
+        fontWeight: 600,
+        fontSize: 17,
+        marginBottom: 16,
+      })}>
+        Token / Profile
+      </NavLink>
+      <NavLink to="/adaptive-mfa" style={({ isActive }) => ({
+        color: isActive ? "var(--primary-color)" : "var(--text-secondary)",
+        textDecoration: "none",
+        fontWeight: 600,
+        fontSize: 17,
+        marginBottom: 16,
+      })}>
+        Adaptive MFA
+      </NavLink>
+      <NavLink to="/organization" style={({ isActive }) => ({
+        color: isActive ? "var(--primary-color)" : "var(--text-secondary)",
+        textDecoration: "none",
+        fontWeight: 600,
+        fontSize: 17,
+        marginBottom: 16,
+      })}>
+        Organization
+      </NavLink>
+
+      {/* Hidden menu items: Actions, Custom Token Exchange, Log Streams, Forms
       <NavLink to="/actions" style={({ isActive }) => ({
         color: isActive ? "var(--primary-color)" : "var(--text-secondary)",
         textDecoration: "none",
@@ -112,24 +141,6 @@ const Sidebar = () => {
         marginBottom: 16,
       })}>
         Custom Token Exchange
-      </NavLink>
-      <NavLink to="/adaptive-mfa" style={({ isActive }) => ({
-        color: isActive ? "var(--primary-color)" : "var(--text-secondary)",
-        textDecoration: "none",
-        fontWeight: 600,
-        fontSize: 17,
-        marginBottom: 16,
-      })}>
-        Adaptive MFA
-      </NavLink>
-      <NavLink to="/token" style={({ isActive }) => ({
-        color: isActive ? "var(--primary-color)" : "var(--text-secondary)",
-        textDecoration: "none",
-        fontWeight: 600,
-        fontSize: 17,
-        marginBottom: 16,
-      })}>
-        Token / Profile
       </NavLink>
 
       <NavLink to="/log-streams" style={({ isActive }) => ({
@@ -152,17 +163,7 @@ const Sidebar = () => {
       })}>
         Forms
       </NavLink>
-
-
-      <NavLink to="/organization" style={({ isActive }) => ({
-        color: isActive ? "var(--primary-color)" : "var(--text-secondary)",
-        textDecoration: "none",
-        fontWeight: 600,
-        fontSize: 17,
-        marginBottom: 16,
-      })}>
-        Organization
-      </NavLink>
+      */}
 
       <NavLink
         to="/dae-extension"
@@ -185,6 +186,7 @@ const Sidebar = () => {
         DAE Extension
       </NavLink>
 
+      {/* Hidden: SAML IDP Initiated + Passwordless Login
       <button
         onClick={handleIdpPortal}
         style={{
@@ -219,6 +221,7 @@ const Sidebar = () => {
       >
         Passwordless Login
       </button>
+      */}
       {/*
       <button
         onClick={() => {
@@ -240,6 +243,7 @@ const Sidebar = () => {
         DAE Admin Login
       </button>
       */}
+      {/* Hidden: Okta Workforce OIDC
       <button
         onClick={handleOktaWorkforce}
         style={{
@@ -257,6 +261,7 @@ const Sidebar = () => {
       >
         Okta Workforce OIDC
       </button>
+      */}
 
       {/* Universal Login Button */}
       <button
