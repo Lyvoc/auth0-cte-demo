@@ -32,7 +32,7 @@ const OrganizationPicker: React.FC<OrganizationPickerProps> = ({
     } else {
       // Direct login to first/only country using org ID
       const country = brand.countries[0];
-      handleOrgLogin(country?.orgName || `${brandId}-es`, country?.orgId);
+      handleOrgLogin(country?.orgName || brandId, country?.orgId);
     }
   };
 

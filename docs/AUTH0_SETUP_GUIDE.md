@@ -207,7 +207,7 @@ exports.onExecuteCustomTokenExchange = async (event, api) => {
   // STEP 2: Set the Auth0 user (create if doesn't exist)
   try {
     api.authentication.setUserByConnection(
-      'Users',
+      'DB',
       {
         user_id: externalUserId,
         email: userEmail,
@@ -373,7 +373,7 @@ npm run dev:backend
 ### "User provisioning failed"
 - Check the database connection exists and is named correctly in the Action code
 - Enable it for your application: Applications → Your App → Connections tab
-- Verify the connection name in the Action matches your database connection (e.g., "Users")
+- Verify the connection name in the Action matches your database connection (e.g., "DB")
 
 ---
 

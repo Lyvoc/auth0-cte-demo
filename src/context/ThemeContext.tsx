@@ -3,8 +3,8 @@ import { OrganizationBranding, getOrganizationBranding } from "../config/organiz
 
 // Default theme values (matches :root in index.css)
 const DEFAULT_THEME = {
-  customerName: "Fluidra",
-  logoUrl: "https://www.fluidra.com/wp-content/uploads/2024/07/Logo.webp",
+  customerName: "PlayPlay",
+  logoUrl: "https://playplay.com/brand/logo-black.svg",
   primaryColor: "#63b3ed",
   secondaryColor: "#ed8936",
   bgPrimary: "#1a1e27",
@@ -32,8 +32,8 @@ const STORAGE_KEY = "auth0-cic-demo-theme";
 
 // Get env var values as fallback
 const getEnvTheme = (): Partial<ThemeConfig> => ({
-  customerName: import.meta.env.VITE_CUSTOMER_NAME || "Fluidra",
-  logoUrl: import.meta.env.VITE_LOGO_URL || "https://www.fluidra.com/wp-content/uploads/2024/07/Logo.webp",
+  customerName: import.meta.env.VITE_CUSTOMER_NAME || "PlayPlay",
+  logoUrl: import.meta.env.VITE_LOGO_URL || "https://playplay.com/brand/logo-black.svg",
   primaryColor: import.meta.env.VITE_PRIMARY_COLOR || "",
   secondaryColor: import.meta.env.VITE_SECONDARY_COLOR || "",
   bgPrimary: import.meta.env.VITE_BG_PRIMARY || "",
@@ -83,8 +83,8 @@ const applyTheme = (theme: ThemeConfig) => {
   root.style.setProperty("--text-secondary", theme.textSecondary);
   root.style.setProperty("--text-muted", theme.textMuted);
   
-  // Update document title (always fallback to Fluidra)
-  const customerName = theme.customerName && theme.customerName.trim() ? theme.customerName : "Fluidra";
+  // Update document title (always fallback to PlayPlay)
+  const customerName = theme.customerName && theme.customerName.trim() ? theme.customerName : "PlayPlay";
   document.title = `${customerName} CIC Demo`;
 };
 

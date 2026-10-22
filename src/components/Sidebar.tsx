@@ -61,19 +61,19 @@ const Sidebar = () => {
     >
       <div style={{ marginBottom: "2rem", textAlign: "center" }}>
         <img
-          src={theme.logoUrl && theme.logoUrl.trim() ? theme.logoUrl : "https://www.fluidra.com/wp-content/uploads/2024/07/Logo.webp"}
+          src={theme.logoUrl && theme.logoUrl.trim() ? theme.logoUrl : "https://playplay.com/brand/logo-black.svg"}
           alt="Logo"
           style={{ maxWidth: 140, maxHeight: 60, marginBottom: 12, objectFit: "contain" }}
         />
         <div style={{ color: "var(--text-primary)", fontWeight: 700, fontSize: 18 }}>
-          {theme.customerName && theme.customerName.trim() ? theme.customerName : "Fluidra"} CIC Demo
+          {theme.customerName && theme.customerName.trim() ? theme.customerName : "PlayPlay"} CIC Demo
         </div>
         
         {/* Organization Badge */}
         {currentOrgBranding && isAuthenticated && (
           <div style={{ marginTop: "1rem" }}>
             <OrganizationBadge
-              orgName={currentOrgBranding.brandId + "-" + currentOrgBranding.country}
+              orgName={currentOrgBranding.brandId}
               displayName={currentOrgBranding.displayName}
               logoUrl={currentOrgBranding.logoUrl}
               primaryColor={currentOrgBranding.theme.primaryColor}

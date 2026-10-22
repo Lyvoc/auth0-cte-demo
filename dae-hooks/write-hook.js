@@ -10,8 +10,8 @@
  *         DAE Role and Business Role.
  *
  * Org map:
- *   admin / b2b_customer → fluidra-es (org_RivztKsZ841qo1JG)
- *   buyer               → grepool-es  (org_xs1zrgSOKLxP48L1)
+ *   admin / b2b_customer → client-1 (org_7q04KtoynQHf9VBr)
+ *   buyer               → client-2  (org_uhdstdZhMUlMzfwo)
  */
 
 function (ctx, callback) {
@@ -34,9 +34,9 @@ function (ctx, callback) {
     typeof rawDaeRole === "object" ? rawDaeRole.value : rawDaeRole;
 
   var orgFromRole = null;
-  if      (businessRole === "admin")        orgFromRole = "fluidra-es";
-  else if (businessRole === "b2b_customer") orgFromRole = "fluidra-es";
-  else if (businessRole === "buyer")        orgFromRole = "grepool-es";
+  if      (businessRole === "admin")        orgFromRole = "client-1";
+  else if (businessRole === "b2b_customer") orgFromRole = "client-1";
+  else if (businessRole === "buyer")        orgFromRole = "client-2";
 
   if (!orgFromRole) {
     var adminOrgs =
@@ -46,8 +46,8 @@ function (ctx, callback) {
   }
 
   var orgIdMap = {
-    "fluidra-es": "org_RivztKsZ841qo1JG",
-    "grepool-es":  "org_xs1zrgSOKLxP48L1"
+    "client-1": "org_7q04KtoynQHf9VBr",
+    "client-2":  "org_uhdstdZhMUlMzfwo"
   };
 
   var businessRoleMap = {

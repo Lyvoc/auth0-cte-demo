@@ -50,15 +50,15 @@ function (ctx, callback) {
     { value: "", label: "No Business Role" }
   ];
 
-  if (adminOrg === "fluidra-es") {
+  if (adminOrg === "client-1") {
     businessOptions.push(
-      { value: "admin",        label: "Fluidra Admin" },
-      { value: "b2b_customer", label: "Fluidra B2B Customer" },
-      { value: "buyer",        label: "Grepool Buyer" }
+      { value: "admin",        label: "PlayPlay Admin" },
+      { value: "b2b_customer", label: "PlayPlay B2B Customer" },
+      { value: "buyer",        label: "Client 2 Buyer" }
     );
-  } else if (adminOrg === "grepool-es") {
+  } else if (adminOrg === "client-2") {
     businessOptions.push(
-      { value: "buyer", label: "Grepool Buyer" }
+      { value: "buyer", label: "Client 2 Buyer" }
     );
   }
 

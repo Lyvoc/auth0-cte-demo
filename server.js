@@ -20,10 +20,9 @@ app.post('/api/exchange-token', async (req, res) => {
 
   const domain = process.env.VITE_AUTH0_DOMAIN;
   const clientId = process.env.VITE_AUTH0_CLIENT_ID;
-  const clientSecret = process.env.AUTH0_CLIENT_SECRET;
   const audience = process.env.VITE_AUTH0_AUDIENCE;
 
-  if (!domain || !clientId || !clientSecret) {
+  if (!domain || !clientId) {
     return res.status(500).json({ error: 'Server configuration missing' });
   }
 
@@ -36,11 +35,10 @@ app.post('/api/exchange-token', async (req, res) => {
     const response = await axios.post(`https://${domain}/oauth/token`, {
       grant_type: 'urn:ietf:params:oauth:grant-type:token-exchange',
       client_id: clientId,
-      client_secret: clientSecret,
       subject_token: external_token,
       subject_token_type: 'urn:mycompany:legacy-system',
       audience: audience,
-      scope: 'openid profile email read:data write:data'
+      scope: 'openid profile email'
     }, {
       headers: {
         'Content-Type': 'application/json'

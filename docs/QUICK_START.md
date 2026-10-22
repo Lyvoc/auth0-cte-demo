@@ -139,7 +139,7 @@ Go to Actions → Library → Your Custom Token Exchange Action → "Real-time W
 → Check `AUTH0_CLIENT_SECRET` is in .env file
 
 **"User provisioning failed"**
-→ Verify connection "Users" exists and is enabled for your application in Auth0 Dashboard
+→ Verify connection "DB" exists and is enabled for your application in Auth0 Dashboard
 
 ## 📚 Full Documentation
 
@@ -172,7 +172,7 @@ See [AUTH0_SETUP_GUIDE.md](./AUTH0_SETUP_GUIDE.md) for complete step-by-step ins
 ### Action logs show "user_provisioning_failed"
 - Check database connection name in Action code matches your Auth0 database
 - Verify connection is enabled for your application
-- Default is "Users" but yours might be named differently
+- Default is "DB" but yours might be named differently
 
 ### Tokens don't show metadata
 - Metadata is stored on the user profile, not in tokens

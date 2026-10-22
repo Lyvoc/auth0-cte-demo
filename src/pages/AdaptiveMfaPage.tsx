@@ -11,14 +11,14 @@ const AdaptiveMfaPage: React.FC = () => {
         <b>Adaptive Multi-Factor Authentication (MFA)</b> is a security feature that evaluates risk factors such as user location, device, and behavior to determine when to prompt for additional authentication. This helps balance security and user experience by only requiring MFA when necessary.
       </p>
       <p>
-        The button below will log in using the <b>Users</b> database connection. Adaptive MFA is configured to trigger only for this connection.
+        The button below will log in using the <b>DB</b> database connection. Adaptive MFA is configured to trigger only for this connection.
       </p>
 
       <button
         onClick={() => {
           loginWithRedirect({
             authorizationParams: {
-              connection: "Users",
+              connection: "DB",
               redirect_uri: window.location.origin + "/token",
               scope: "openid profile email",
               prompt: "login"
@@ -38,7 +38,7 @@ const AdaptiveMfaPage: React.FC = () => {
           textAlign: "left",
         }}
       >
-        Login with Users (Adaptive MFA)
+        Login with DB (Adaptive MFA)
       </button>
     </div>
   );

@@ -67,10 +67,9 @@ export default {
         // Get Auth0 credentials from environment
         const domain = env.VITE_AUTH0_DOMAIN;
         const clientId = env.VITE_AUTH0_CLIENT_ID;
-        const clientSecret = env.AUTH0_CLIENT_SECRET;
         const audience = env.VITE_AUTH0_AUDIENCE;
 
-        if (!domain || !clientId || !clientSecret || !audience) {
+        if (!domain || !clientId || !audience) {
           return new Response(JSON.stringify({ error: 'Server configuration error' }), {
             status: 500,
             headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -88,7 +87,6 @@ export default {
             subject_token: subjectToken,
             subject_token_type: 'urn:mycompany:legacy-system',
             client_id: clientId,
-            client_secret: clientSecret,
             audience: audience,
             scope: 'openid profile email',
           }),

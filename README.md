@@ -129,7 +129,7 @@ Auth0 Issues Tokens
 **Backend errors**
 - Verify client secret in .env file
 - Ensure backend is running on port 3001
-- Check Auth0 database connection is enabled for your application (e.g., "Users")
+- Check Auth0 database connection is enabled for your application (e.g., "DB")
 
 ## 🎓 Use Cases
 

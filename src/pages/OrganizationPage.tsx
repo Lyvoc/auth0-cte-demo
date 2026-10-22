@@ -42,7 +42,7 @@ const OrganizationPage: React.FC = () => {
   const { applyOrganizationTheme, currentOrgBranding } = useTheme();
   const [activeTab, setActiveTab] = useState<"demo" | "architecture" | "accounts">("demo");
   const [demoRoles, setDemoRoles] = useState<string[]>(["admin"]);
-  const [selectedOrgForDemo, setSelectedOrgForDemo] = useState<string>("fluidra-es");
+  const [selectedOrgForDemo, setSelectedOrgForDemo] = useState<string>("client-1");
   const [selectedApp, setSelectedApp] = useState<ApplicationAccess | null>(null);
 
   const brands = getAvailableBrands();
@@ -101,10 +101,10 @@ const OrganizationPage: React.FC = () => {
               {brands.map((brand) => (
                 <div
                   key={brand.id}
-                  onClick={() => handlePreviewTheme(`${brand.id}-es`)}
+                  onClick={() => handlePreviewTheme(brand.countries[0]?.orgName ?? brand.id)}
                   style={{
-                    background: selectedOrgForDemo.startsWith(brand.id) ? brand.primaryColor + "20" : "var(--bg-primary)",
-                    border: `2px solid ${selectedOrgForDemo.startsWith(brand.id) ? brand.primaryColor : "transparent"}`,
+                    background: selectedBranding?.brandId === brand.id ? brand.primaryColor + "20" : "var(--bg-primary)",
+                    border: `2px solid ${selectedBranding?.brandId === brand.id ? brand.primaryColor : "transparent"}`,
                     borderRadius: "10px",
                     padding: "1rem 1.5rem",
                     cursor: "pointer",
@@ -123,9 +123,6 @@ const OrganizationPage: React.FC = () => {
                     }}
                   />
                   <div style={{ fontWeight: 600, color: "var(--text-primary)" }}>{brand.name}</div>
-                  <div style={{ fontSize: "0.75rem", color: "var(--text-muted)" }}>
-                    Spain (ES)
-                  </div>
                 </div>
               ))}
             </div>
@@ -146,7 +143,7 @@ const OrganizationPage: React.FC = () => {
                       {selectedBranding.displayName}
                     </div>
                     <div style={{ fontSize: "0.85rem", color: "var(--text-muted)" }}>
-                      Primary: {selectedBranding.theme.primaryColor} · Language: {selectedBranding.language}
+                      Primary: {selectedBranding.theme.primaryColor}
                     </div>
                   </div>
                   <button
@@ -305,7 +302,7 @@ const OrganizationPage: React.FC = () => {
               When a user belongs to multiple organizations, there are two routing patterns:
             </p>
             <ul style={{ color: "var(--text-secondary)", marginBottom: "1.5rem" }}>
-              <li><strong>Pattern A (Silent routing):</strong> App passes <code>?org=fluidra-es</code> in the URL → user enters credentials → authenticated directly into that brand.</li>
+              <li><strong>Pattern A (Silent routing):</strong> App passes <code>?org=client-1</code> in the URL → user enters credentials → authenticated directly into that brand.</li>
               <li><strong>Pattern B (In-login org picker):</strong> App omits the org parameter → user enters credentials → Auth0 detects their org memberships and presents them as selectable buttons → user picks one → authenticated into that org.</li>
             </ul>
 
@@ -320,9 +317,9 @@ const OrganizationPage: React.FC = () => {
                   cursor: "pointer",
                   fontWeight: 500,
                 }}
-                onClick={() => handleBrandedLogin("fluidra-es")}
+                onClick={() => handleBrandedLogin("client-1")}
               >
-                Login with org=fluidra-es (Silent)
+                Login with org=client-1 (Silent)
               </button>
               <button
                 style={{
@@ -359,7 +356,7 @@ const OrganizationPage: React.FC = () => {
           <div style={sectionStyle}>
             <h2 style={{ marginTop: 0 }}>🏗️ The Model: 1 Org per Brand (Expandable to N Countries)</h2>
             <p style={{ color: "var(--text-secondary)" }}>
-              Each Auth0 Organization = one brand (+ country when expanded). Currently configured with Spain (ES) only.
+              Each Auth0 Organization = one brand (+ country when expanded).
               Applications are NOT separate organizations — they are scoped within the organization via roles.
             </p>
 
@@ -386,9 +383,9 @@ const OrganizationPage: React.FC = () => {
                         </code>
                       </td>
                       <td style={{ padding: "0.75rem", color: "var(--text-secondary)" }}>
-                        {brand.id === "fluidra"
+                        {brand.id === "client-1"
                           ? "eSales · Media Center · Pro Academy · Pro Lab · Pro App"
-                          : brand.id === "astralpool"
+                          : brand.id === "client-3"
                           ? "eSales · Media Center · Pro Academy"
                           : "eSales · Media Center"}
                       </td>
@@ -403,7 +400,7 @@ const OrganizationPage: React.FC = () => {
             <h2 style={{ marginTop: 0 }}>🔑 Key Design Decisions</h2>
             <ul style={{ color: "var(--text-secondary)", lineHeight: 1.8 }}>
               <li>
-                <strong>One organization per brand per country</strong> (e.g., fluidra-es, astralpool-uk, grepool-pt).
+                <strong>One organization per brand per country</strong> (e.g., client-1, client-2, client-3).
                 This is the finest granularity at which branding, language, and support contact differ.
               </li>
               <li>
@@ -430,28 +427,28 @@ const OrganizationPage: React.FC = () => {
               {[
                 {
                   title: "Single-Brand Buyer",
-                  org: "fluidra-es",
+                  org: "client-1",
                   roles: ["buyer"],
                   apps: ["eSales"],
                   description: "Most common user type. Direct login to one brand.",
                 },
                 {
                   title: "B2B Customer",
-                  org: "fluidra-es",
+                  org: "client-1",
                   roles: ["b2b_customer"],
                   apps: ["Media Center", "Pro Academy", "Pro Lab"],
                   description: "Access to training and technical tools.",
                 },
                 {
                   title: "Multi-Brand Buyer",
-                  org: "fluidra-es, grepool-es, astralpool-es",
+                  org: "client-1, client-2, client-3",
                   roles: ["buyer"],
                   apps: ["eSales (per org)"],
                   description: "Uses org picker to switch between brands.",
                 },
                 {
                   title: "Organization Admin",
-                  org: "fluidra-es",
+                  org: "client-1",
                   roles: ["admin"],
                   apps: ["All 5 apps"],
                   description: "Full access to all applications.",
@@ -495,48 +492,48 @@ const OrganizationPage: React.FC = () => {
 
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: "1rem" }}>
               
-              {/* Fluidra Admin */}
+              {/* Client 1 Admin */}
               <div style={{ background: "var(--bg-primary)", borderRadius: "8px", padding: "1rem", borderLeft: "3px solid #005BAC" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.75rem" }}>
                   <span style={{ fontSize: "1.25rem" }}>👑</span>
-                  <strong style={{ color: "var(--text-primary)" }}>Fluidra Admin</strong>
+                  <strong style={{ color: "var(--text-primary)" }}>Client 1 Admin</strong>
                   <span style={{ background: "#005BAC20", color: "#005BAC", padding: "0.15rem 0.5rem", borderRadius: "4px", fontSize: "0.7rem", fontWeight: 500 }}>ADMIN</span>
                 </div>
                 <div style={{ fontFamily: "monospace", fontSize: "0.85rem", background: "var(--bg-secondary)", padding: "0.75rem", borderRadius: "6px" }}>
                   <div><span style={{ color: "var(--text-muted)" }}>Email:</span> <span style={{ color: "var(--text-primary)" }}>admin@fluidra.com</span></div>
                   <div><span style={{ color: "var(--text-muted)" }}>Password:</span> <span style={{ color: "var(--text-primary)" }}>Password123!</span></div>
                   <div style={{ marginTop: "0.5rem", paddingTop: "0.5rem", borderTop: "1px solid var(--bg-primary)" }}>
-                    <span style={{ color: "var(--text-muted)" }}>Org:</span> <span style={{ color: "#005BAC" }}>fluidra-es</span>
+                    <span style={{ color: "var(--text-muted)" }}>Org:</span> <span style={{ color: "#005BAC" }}>client-1</span>
                   </div>
                   <div><span style={{ color: "var(--text-muted)" }}>Roles:</span> <span style={{ color: "var(--text-secondary)" }}>admin</span></div>
                   <div><span style={{ color: "var(--text-muted)" }}>Access:</span> <span style={{ color: "var(--text-secondary)" }}>All 5 apps</span></div>
                 </div>
                 <button
-                  onClick={() => handleBrandedLogin("fluidra-es")}
+                  onClick={() => handleBrandedLogin("client-1")}
                   style={{ marginTop: "0.75rem", background: "#005BAC", color: "#fff", border: "none", borderRadius: "6px", padding: "0.5rem 1rem", cursor: "pointer", fontWeight: 500, fontSize: "0.85rem" }}
                 >
-                  Login as Fluidra Admin
+                  Login as Client 1 Admin
                 </button>
               </div>
 
-              {/* Fluidra B2B Customer */}
+              {/* Client 1 B2B Customer */}
               <div style={{ background: "var(--bg-primary)", borderRadius: "8px", padding: "1rem", borderLeft: "3px solid #005BAC" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.75rem" }}>
                   <span style={{ fontSize: "1.25rem" }}>🔧</span>
-                  <strong style={{ color: "var(--text-primary)" }}>Fluidra B2B Customer</strong>
+                  <strong style={{ color: "var(--text-primary)" }}>Client 1 B2B Customer</strong>
                   <span style={{ background: "#005BAC20", color: "#005BAC", padding: "0.15rem 0.5rem", borderRadius: "4px", fontSize: "0.7rem", fontWeight: 500 }}>B2B</span>
                 </div>
                 <div style={{ fontFamily: "monospace", fontSize: "0.85rem", background: "var(--bg-secondary)", padding: "0.75rem", borderRadius: "6px" }}>
                   <div><span style={{ color: "var(--text-muted)" }}>Email:</span> <span style={{ color: "var(--text-primary)" }}>demo@fluidra.com</span></div>
                   <div><span style={{ color: "var(--text-muted)" }}>Password:</span> <span style={{ color: "var(--text-primary)" }}>Password123!</span></div>
                   <div style={{ marginTop: "0.5rem", paddingTop: "0.5rem", borderTop: "1px solid var(--bg-primary)" }}>
-                    <span style={{ color: "var(--text-muted)" }}>Org:</span> <span style={{ color: "#005BAC" }}>fluidra-es</span>
+                    <span style={{ color: "var(--text-muted)" }}>Org:</span> <span style={{ color: "#005BAC" }}>client-1</span>
                   </div>
                   <div><span style={{ color: "var(--text-muted)" }}>Roles:</span> <span style={{ color: "var(--text-secondary)" }}>b2b_customer</span></div>
                   <div><span style={{ color: "var(--text-muted)" }}>Access:</span> <span style={{ color: "var(--text-secondary)" }}>Media Center, Pro Academy, Pro Lab</span></div>
                 </div>
                 <button
-                  onClick={() => handleBrandedLogin("fluidra-es")}
+                  onClick={() => handleBrandedLogin("client-1")}
                   style={{ marginTop: "0.75rem", background: "#005BAC", color: "#fff", border: "none", borderRadius: "6px", padding: "0.5rem 1rem", cursor: "pointer", fontWeight: 500, fontSize: "0.85rem" }}
                 >
                   Login as B2B Customer
@@ -554,7 +551,7 @@ const OrganizationPage: React.FC = () => {
                   <div><span style={{ color: "var(--text-muted)" }}>Email:</span> <span style={{ color: "var(--text-primary)" }}>multi@demo.com</span></div>
                   <div><span style={{ color: "var(--text-muted)" }}>Password:</span> <span style={{ color: "var(--text-primary)" }}>Password123!</span></div>
                   <div style={{ marginTop: "0.5rem", paddingTop: "0.5rem", borderTop: "1px solid var(--bg-primary)" }}>
-                    <span style={{ color: "var(--text-muted)" }}>Orgs:</span> <span style={{ color: "#805ad5" }}>fluidra-es, grepool-es, astralpool-es</span>
+                    <span style={{ color: "var(--text-muted)" }}>Orgs:</span> <span style={{ color: "#805ad5" }}>client-1, client-2, client-3</span>
                   </div>
                   <div><span style={{ color: "var(--text-muted)" }}>Roles:</span> <span style={{ color: "var(--text-secondary)" }}>buyer (all orgs)</span></div>
                   <div><span style={{ color: "var(--text-muted)" }}>Access:</span> <span style={{ color: "var(--text-secondary)" }}>eSales (per org)</span></div>
@@ -564,27 +561,27 @@ const OrganizationPage: React.FC = () => {
                 </p>
               </div>
 
-              {/* Grepool Buyer */}
+              {/* Client 2 Buyer */}
               <div style={{ background: "var(--bg-primary)", borderRadius: "8px", padding: "1rem", borderLeft: "3px solid #ED8936" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.75rem" }}>
                   <span style={{ fontSize: "1.25rem" }}>🛒</span>
-                  <strong style={{ color: "var(--text-primary)" }}>Grepool Buyer</strong>
+                  <strong style={{ color: "var(--text-primary)" }}>Client 2 Buyer</strong>
                   <span style={{ background: "#ED893620", color: "#ED8936", padding: "0.15rem 0.5rem", borderRadius: "4px", fontSize: "0.7rem", fontWeight: 500 }}>BUYER</span>
                 </div>
                 <div style={{ fontFamily: "monospace", fontSize: "0.85rem", background: "var(--bg-secondary)", padding: "0.75rem", borderRadius: "6px" }}>
                   <div><span style={{ color: "var(--text-muted)" }}>Email:</span> <span style={{ color: "var(--text-primary)" }}>buyer@grepool.com</span></div>
                   <div><span style={{ color: "var(--text-muted)" }}>Password:</span> <span style={{ color: "var(--text-primary)" }}>Password123!</span></div>
                   <div style={{ marginTop: "0.5rem", paddingTop: "0.5rem", borderTop: "1px solid var(--bg-primary)" }}>
-                    <span style={{ color: "var(--text-muted)" }}>Org:</span> <span style={{ color: "#ED8936" }}>grepool-es</span>
+                    <span style={{ color: "var(--text-muted)" }}>Org:</span> <span style={{ color: "#ED8936" }}>client-2</span>
                   </div>
                   <div><span style={{ color: "var(--text-muted)" }}>Roles:</span> <span style={{ color: "var(--text-secondary)" }}>buyer</span></div>
                   <div><span style={{ color: "var(--text-muted)" }}>Access:</span> <span style={{ color: "var(--text-secondary)" }}>eSales only</span></div>
                 </div>
                 <button
-                  onClick={() => handleBrandedLogin("grepool-es")}
+                  onClick={() => handleBrandedLogin("client-2")}
                   style={{ marginTop: "0.75rem", background: "#ED8936", color: "#fff", border: "none", borderRadius: "6px", padding: "0.5rem 1rem", cursor: "pointer", fontWeight: 500, fontSize: "0.85rem" }}
                 >
-                  Login as Grepool Buyer
+                  Login as Client 2 Buyer
                 </button>
               </div>
 
@@ -608,25 +605,25 @@ const OrganizationPage: React.FC = () => {
                 <tbody>
                   <tr style={{ borderBottom: "1px solid var(--bg-primary)" }}>
                     <td style={{ padding: "0.75rem" }}><code>admin@fluidra.com</code></td>
-                    <td style={{ padding: "0.75rem" }}>fluidra-es</td>
+                    <td style={{ padding: "0.75rem" }}>client-1</td>
                     <td style={{ padding: "0.75rem" }}>admin</td>
                     <td style={{ padding: "0.75rem", color: "var(--text-muted)" }}>Full access demo</td>
                   </tr>
                   <tr style={{ borderBottom: "1px solid var(--bg-primary)" }}>
                     <td style={{ padding: "0.75rem" }}><code>demo@fluidra.com</code></td>
-                    <td style={{ padding: "0.75rem" }}>fluidra-es</td>
+                    <td style={{ padding: "0.75rem" }}>client-1</td>
                     <td style={{ padding: "0.75rem" }}>b2b_customer</td>
                     <td style={{ padding: "0.75rem", color: "var(--text-muted)" }}>B2B customer persona</td>
                   </tr>
                   <tr style={{ borderBottom: "1px solid var(--bg-primary)" }}>
                     <td style={{ padding: "0.75rem" }}><code>multi@demo.com</code></td>
-                    <td style={{ padding: "0.75rem" }}>fluidra-es, grepool-es, astralpool-es</td>
+                    <td style={{ padding: "0.75rem" }}>client-1, client-2, client-3</td>
                     <td style={{ padding: "0.75rem" }}>buyer</td>
                     <td style={{ padding: "0.75rem", color: "var(--text-muted)" }}>Multi-org picker demo</td>
                   </tr>
                   <tr>
                     <td style={{ padding: "0.75rem" }}><code>buyer@grepool.com</code></td>
-                    <td style={{ padding: "0.75rem" }}>grepool-es</td>
+                    <td style={{ padding: "0.75rem" }}>client-2</td>
                     <td style={{ padding: "0.75rem" }}>buyer</td>
                     <td style={{ padding: "0.75rem", color: "var(--text-muted)" }}>Brand switching demo</td>
                   </tr>

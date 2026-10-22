@@ -5,9 +5,7 @@
  * Each brand has its own color palette, logo, and support URL.
  * 
  * Model: 3 Brands × N Countries = N Auth0 Organizations
- * - fluidra-es, fluidra-pt, fluidra-de, fluidra-nordics, ...
- * - grepool-es, grepool-pt, ...
- * - astralpool-es, astralpool-uk, ...
+ * - client-1, client-2, client-3 (one Auth0 organization each)
  */
 
 export interface OrganizationBranding {
@@ -83,11 +81,11 @@ export const ROLE_APP_ACCESS: Record<string, string[]> = {
 
 // Brand base configurations
 const BRAND_CONFIGS = {
-  fluidra: {
-    brandId: "fluidra",
-    brandName: "Fluidra",
-    logoUrl: "https://www.fluidra.com/wp-content/uploads/2024/07/Logo.webp",
-    supportUrl: "https://www.fluidra.com/support",
+  "client-1": {
+    brandId: "client-1",
+    brandName: "Client 1",
+    logoUrl: "https://placehold.co/300x100/005BAC/ffffff/png?text=Client+1+Logo&font=roboto",
+    supportUrl: "https://client-1.example.com/support",
     theme: {
       primaryColor: "#005BAC",
       secondaryColor: "#00A3E0",
@@ -106,11 +104,11 @@ const BRAND_CONFIGS = {
       APPLICATIONS.proApp,
     ],
   },
-  grepool: {
-    brandId: "grepool",
-    brandName: "Grepool",
-    logoUrl: "https://www.depozitpiscine.ro/ProducerContentFileHandler/600/600/gre-48.jpeg",
-    supportUrl: "https://www.grepool.com/support",
+  "client-2": {
+    brandId: "client-2",
+    brandName: "Client 2",
+    logoUrl: "https://placehold.co/300x100/ED8936/ffffff/png?text=Client+2+Logo&font=roboto",
+    supportUrl: "https://client-2.example.com/support",
     theme: {
       primaryColor: "#ED8936",
       secondaryColor: "#F6AD55",
@@ -126,11 +124,11 @@ const BRAND_CONFIGS = {
       APPLICATIONS.mediaCenter,
     ],
   },
-  astralpool: {
-    brandId: "astralpool",
-    brandName: "AstralPool",
-    logoUrl: "https://www.astralpool.com/content/dam/astralpool/logo/logo-astralpool.svg",
-    supportUrl: "https://www.astralpool.com/support",
+  "client-3": {
+    brandId: "client-3",
+    brandName: "Client 3",
+    logoUrl: "https://placehold.co/300x100/00875A/ffffff/png?text=Client+3+Logo&font=roboto",
+    supportUrl: "https://client-3.example.com/support",
     theme: {
       primaryColor: "#00875A",
       secondaryColor: "#38A169",
@@ -173,7 +171,7 @@ function createOrgBranding(
 
   return {
     ...brand,
-    displayName: `${brand.brandName} ${country.name}`,
+    displayName: brand.brandName,
     country: countryCode,
     language: country.language,
   };
@@ -187,9 +185,9 @@ function createOrgBranding(
  * Add more entries when you create additional country orgs in Auth0.
  */
 export const ORG_IDS: Record<string, string> = {
-  "fluidra-es": "org_RivztKsZ841qo1JG",
-  "grepool-es": "org_xs1zrgSOKLxP48L1",
-  "astralpool-es": "org_LzBQvQESaJPNx3f6",
+  "client-1": "org_7q04KtoynQHf9VBr",
+  "client-2": "org_uhdstdZhMUlMzfwo",
+  "client-3": "org_QC43Lk3mOC5IWjrv",
 };
 
 /**
@@ -214,35 +212,35 @@ export function getOrgId(orgName: string): string {
  * Organization branding lookup by org_id or org_name
  * 
  * This maps Auth0 organization identifiers to their branding configuration.
- * The key can be either the org_id (e.g., "org_abc123") or the org name (e.g., "fluidra-es").
+ * The key can be either the org_id (e.g., "org_abc123") or the org name (e.g., "client-1").
  * 
  * Currently configured for Spain (ES) only - 3 orgs total.
  */
 export const ORGANIZATION_BRANDING: Record<string, OrganizationBranding> = {
-  // Fluidra Spain
-  "fluidra-es": createOrgBranding("fluidra", "es"),
-  "org_RivztKsZ841qo1JG": createOrgBranding("fluidra", "es"),
+  // Client 1
+  "client-1": createOrgBranding("client-1", "es"),
+  "org_7q04KtoynQHf9VBr": createOrgBranding("client-1", "es"),
 
-  // Grepool Spain  
-  "grepool-es": createOrgBranding("grepool", "es"),
-  "org_xs1zrgSOKLxP48L1": createOrgBranding("grepool", "es"),
+  // Client 2
+  "client-2": createOrgBranding("client-2", "es"),
+  "org_uhdstdZhMUlMzfwo": createOrgBranding("client-2", "es"),
 
-  // AstralPool Spain
-  "astralpool-es": createOrgBranding("astralpool", "es"),
-  "org_LzBQvQESaJPNx3f6": createOrgBranding("astralpool", "es"),
+  // Client 3
+  "client-3": createOrgBranding("client-3", "es"),
+  "org_QC43Lk3mOC5IWjrv": createOrgBranding("client-3", "es"),
 };
 
 /**
  * Get branding for an organization by ID or name
- * Falls back to Fluidra default if not found
+ * Falls back to Client 1 default if not found
  */
 export function getOrganizationBranding(orgIdentifier: string): OrganizationBranding | null {
-  // Direct lookup by org name (e.g., "fluidra-es")
+  // Direct lookup by org name (e.g., "client-1")
   if (ORGANIZATION_BRANDING[orgIdentifier]) {
     return ORGANIZATION_BRANDING[orgIdentifier];
   }
 
-  // Try to parse brand from identifier (e.g., "org_fluidra_es" or custom org_id)
+  // Try to parse brand from identifier (e.g., "org_client_1" or custom org_id)
   const lowerId = orgIdentifier.toLowerCase();
   for (const [key, branding] of Object.entries(ORGANIZATION_BRANDING)) {
     if (lowerId.includes(key.replace("-", "_")) || lowerId.includes(key)) {
@@ -268,12 +266,12 @@ export function getOrganizationsByBrand(brandId: string): OrganizationBranding[]
 export function getAvailableBrands() {
   return [
     {
-      id: "fluidra",
-      name: "Fluidra",
-      logoUrl: BRAND_CONFIGS.fluidra.logoUrl,
-      primaryColor: BRAND_CONFIGS.fluidra.theme.primaryColor,
-      countries: getOrganizationsByBrand("fluidra").map((org) => {
-        const orgName = `fluidra-${org.country}`;
+      id: "client-1",
+      name: "Client 1",
+      logoUrl: BRAND_CONFIGS["client-1"].logoUrl,
+      primaryColor: BRAND_CONFIGS["client-1"].theme.primaryColor,
+      countries: getOrganizationsByBrand("client-1").map((org) => {
+        const orgName = "client-1";
         return {
           code: org.country,
           name: COUNTRY_CONFIGS[org.country]?.name || org.country,
@@ -283,12 +281,12 @@ export function getAvailableBrands() {
       }),
     },
     {
-      id: "grepool",
-      name: "Grepool",
-      logoUrl: BRAND_CONFIGS.grepool.logoUrl,
-      primaryColor: BRAND_CONFIGS.grepool.theme.primaryColor,
-      countries: getOrganizationsByBrand("grepool").map((org) => {
-        const orgName = `grepool-${org.country}`;
+      id: "client-2",
+      name: "Client 2",
+      logoUrl: BRAND_CONFIGS["client-2"].logoUrl,
+      primaryColor: BRAND_CONFIGS["client-2"].theme.primaryColor,
+      countries: getOrganizationsByBrand("client-2").map((org) => {
+        const orgName = "client-2";
         return {
           code: org.country,
           name: COUNTRY_CONFIGS[org.country]?.name || org.country,
@@ -298,12 +296,12 @@ export function getAvailableBrands() {
       }),
     },
     {
-      id: "astralpool",
-      name: "AstralPool",
-      logoUrl: BRAND_CONFIGS.astralpool.logoUrl,
-      primaryColor: BRAND_CONFIGS.astralpool.theme.primaryColor,
-      countries: getOrganizationsByBrand("astralpool").map((org) => {
-        const orgName = `astralpool-${org.country}`;
+      id: "client-3",
+      name: "Client 3",
+      logoUrl: BRAND_CONFIGS["client-3"].logoUrl,
+      primaryColor: BRAND_CONFIGS["client-3"].theme.primaryColor,
+      countries: getOrganizationsByBrand("client-3").map((org) => {
+        const orgName = "client-3";
         return {
           code: org.country,
           name: COUNTRY_CONFIGS[org.country]?.name || org.country,

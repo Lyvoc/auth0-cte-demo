@@ -4,8 +4,8 @@
  * Runs when the admin opens the user list.
  * Returns a Lucene query that limits which users are visible.
  *
- * - Fluidra admin (fluidra-es): sees users from both fluidra-es and grepool-es
- * - Grepool admin (grepool-es): sees only grepool-es users
+ * - Client 1 admin (client-1): sees users from both client-1 and client-2
+ * - Client 2 admin (client-2): sees only client-2 users
  */
 
 function (ctx, callback) {
@@ -17,15 +17,15 @@ function (ctx, callback) {
     ? adminOrgs[0]
     : null;
 
-  if (adminOrg === "fluidra-es") {
+  if (adminOrg === "client-1") {
     return callback(null, {
-      query: 'app_metadata.organizations:"fluidra-es" OR app_metadata.organizations:"grepool-es"'
+      query: 'app_metadata.organizations:"client-1" OR app_metadata.organizations:"client-2"'
     });
   }
 
-  if (adminOrg === "grepool-es") {
+  if (adminOrg === "client-2") {
     return callback(null, {
-      query: 'app_metadata.organizations:"grepool-es"'
+      query: 'app_metadata.organizations:"client-2"'
     });
   }
 

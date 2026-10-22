@@ -150,7 +150,7 @@ exports.onExecuteCustomTokenExchange = async (event, api) => {
   // STEP 2: Set the Auth0 user (create if doesn't exist)
   try {
     api.authentication.setUserByConnection(
-      'Users',  // Your database connection name - update if different
+      'DB',  // Your database connection name - update if different
       {
         user_id: externalUserId,
         email: userEmail,
@@ -182,7 +182,7 @@ exports.onExecuteCustomTokenExchange = async (event, api) => {
 > - Custom claims (`api.accessToken.setCustomClaim()`) are NOT supported in CTE Actions
 > - Instead, use `api.user.setAppMetadata()` to store data
 > - To add custom claims to tokens, create a Post Login Action that reads the app_metadata
-> - Update the connection name `'Users'` to match your Auth0 database connection
+> - Update the connection name `'DB'` to match your Auth0 database connection
 
 ### 3.3 Deploy the Action
 
