@@ -7,7 +7,7 @@
     "dev:backend": "node server.js",
     "dev:webapp": "npm --prefix auth0-express-webapp-sample start",
     "dev:all": "concurrently -n spa,api,webapp -c cyan,green,magenta \"npm run dev\" \"npm run dev:backend\" \"npm run dev:webapp\"",
-    "postinstall": "npm --prefix auth0-express-webapp-sample install",
+    "postinstall": "cd auth0-express-webapp-sample && npm install",
     "build": "vite build",
     "serve": "vite preview"
   },
